@@ -22,10 +22,10 @@ def assert_equal(actual, expected, label):
     if actual != expected:
         raise AssertionError(f"{label}: expected {expected!r}, got {actual!r}")
 
-assert_equal(marketplace.get("name"), "superpowers-dev", "marketplace name")
+assert_equal(marketplace.get("name"), "superpowered", "marketplace name")
 assert_equal(
     marketplace.get("interface", {}).get("displayName"),
-    "Superpowers Dev",
+    "Superpowered",
     "marketplace display name",
 )
 
@@ -33,8 +33,8 @@ plugins = marketplace.get("plugins")
 if not isinstance(plugins, list):
     raise AssertionError("plugins must be a list")
 
-matching_plugins = [plugin for plugin in plugins if plugin.get("name") == "superpowers"]
-assert_equal(len(matching_plugins), 1, "superpowers plugin entry count")
+matching_plugins = [plugin for plugin in plugins if plugin.get("name") == "superpowered"]
+assert_equal(len(matching_plugins), 1, "superpowered plugin entry count")
 
 plugin = matching_plugins[0]
 assert_equal(plugin.get("source"), {"source": "url", "url": "./"}, "plugin source")
@@ -51,6 +51,8 @@ if not plugin_manifest.exists():
 
 manifest = json.loads(plugin_manifest.read_text(encoding="utf-8"))
 assert_equal(manifest.get("name"), plugin.get("name"), "plugin manifest name")
+assert_equal(manifest.get("interface", {}).get("displayName"), "Superpowered", "plugin display name")
+assert_equal(manifest.get("repository"), "https://github.com/santiago-migoni/superpowered", "fork repository")
 
 # Codex auto-discovers a plugin's hooks/hooks.json whenever the Codex manifest
 # has no `hooks` field: load_plugin_hooks falls back to a hardcoded

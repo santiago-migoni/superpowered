@@ -1,4 +1,9 @@
-# Superpowers
+# Superpowered
+
+Superpowered is a fork of [Superpowers](https://github.com/obra/superpowers).
+Its Codex plugin is named `superpowered`, displayed as **Superpowered**, and
+listed in this repository's **Superpowered** marketplace (`superpowered`).
+The upstream project and its installation references are described below.
 
 Superpowers is a complete software development methodology for your coding agents, built on top of a set of composable skills and some initial instructions that make sure your agent uses them.
 

@@ -180,7 +180,9 @@ fi
 
 manifest_summary="$(read_archive_file "$archive" .codex-plugin/plugin.json | python3 -c 'import json,sys; data=json.load(sys.stdin); print("\t".join([data["name"], data["version"], data["skills"], str(data.get("hooks"))]))')"
 expected_version="$(python3 -c 'import json; print(json.load(open("'"$REPO_ROOT"'/.codex-plugin/plugin.json"))["version"])')"
-assert_equals "$manifest_summary" "superpowers	$expected_version	./skills/	$source_hooks" "archive manifest preserves source hooks"
+assert_equals "$manifest_summary" "superpowered	$expected_version	./skills/	$source_hooks" "archive manifest preserves fork name and source hooks"
+assert_equals "$(read_archive_file "$archive" .codex-plugin/plugin.json | python3 -c 'import json,sys; print(json.load(sys.stdin)["interface"]["displayName"])')" \
+  "Superpowered" "archive preserves fork display name"
 
 skill_count="$(find "$extracted/skills" -mindepth 1 -maxdepth 1 -type d | wc -l | tr -d ' ')"
 metadata_count="$(find "$extracted/skills" -path '*/agents/openai.yaml' -type f | wc -l | tr -d ' ')"
@@ -325,6 +327,19 @@ if [[ -f "$REPO_ROOT/skills/managing-product/agents/openai.yaml" ]]; then
     else
       fail "tar.gz package accepts prior metadata without the new skill"
       printf '%s\n' "$fallback_tar_output" | sed 's/^/      /'
+    fi
+    default_archive="$TEST_ROOT/_tmp/sup-codex-packaging/superpowered-$expected_version.zip"
+    if default_output="$(bash "$fallback_repo/scripts/package-codex-plugin.sh" \
+      --allow-dirty --metadata-source "$fallback_metadata" 2>&1)"; then
+      assert_contains "$default_output" "Archive: $default_archive" "default archive name uses fork identity"
+      if [[ -f "$default_archive" ]]; then
+        pass "default archive exists with fork name"
+      else
+        fail "default archive exists with fork name"
+      fi
+    else
+      fail "package script writes default fork archive"
+      printf '%s\n' "$default_output" | sed 's/^/      /'
     fi
   else
     fail "package accepts prior metadata without the new skill"

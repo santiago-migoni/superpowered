@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Package the Superpowers Codex plugin as a rootless archive for portal upload.
+# Package the Superpowered Codex plugin as a rootless archive for portal upload.
 #
 # The Codex portal artifact differs from the old openai/plugins sync flow:
 # it is a standalone archive, but it still needs the OpenAI-owned
@@ -26,7 +26,8 @@ Usage:
 
 Options:
   --output PATH            Write archive to PATH.
-                           Default: ../_tmp/sup-codex-packaging/superpowers-VERSION.zip
+                           Default: ../_tmp/sup-codex-packaging/NAME-VERSION.zip
+                           NAME comes from the selected ref's plugin manifest.
   --format FORMAT          Archive format: zip or tar.gz. Default: zip.
                            If --output ends in .zip, .tar.gz, or .tgz, that
                            extension is used when --format is omitted.
@@ -243,14 +244,17 @@ git -C "$REPO_ROOT" -c tar.umask=0022 archive --format=tar "$REF" -- "${payload_
 
 VERSION="$(jq -r '.version // empty' "$STAGE/.codex-plugin/plugin.json")"
 [[ -n "$VERSION" ]] || die "could not read version from .codex-plugin/plugin.json"
+PLUGIN_NAME="$(jq -r '.name // empty' "$STAGE/.codex-plugin/plugin.json")"
+[[ "$PLUGIN_NAME" =~ ^[a-z0-9][a-z0-9-]*$ ]] ||
+  die "invalid plugin name in .codex-plugin/plugin.json"
 
 if [[ -z "$OUTPUT" ]]; then
   case "$FORMAT" in
     zip)
-      OUTPUT="$REPO_ROOT/../_tmp/sup-codex-packaging/superpowers-$VERSION.zip"
+      OUTPUT="$REPO_ROOT/../_tmp/sup-codex-packaging/$PLUGIN_NAME-$VERSION.zip"
       ;;
     tar.gz)
-      OUTPUT="$REPO_ROOT/../_tmp/sup-codex-packaging/superpowers-$VERSION.tar.gz"
+      OUTPUT="$REPO_ROOT/../_tmp/sup-codex-packaging/$PLUGIN_NAME-$VERSION.tar.gz"
       ;;
   esac
 fi
