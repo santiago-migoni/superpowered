@@ -31,7 +31,8 @@ Options:
                            If --output ends in .zip, .tar.gz, or .tgz, that
                            extension is used when --format is omitted.
   --metadata-source PATH   Prior official package directory, .zip, or .tar.gz used to
-                           seed skills/*/agents/openai.yaml.
+                           seed skills/*/agents/openai.yaml, taking precedence over
+                           metadata bundled in the selected ref.
                            Default: ../_tmp/sup-codex-packaging/superpowers,
                            falling back to superpowers.zip, then superpowers.tar.gz
   --ref REF                Git ref to package. Default: HEAD.
@@ -39,7 +40,7 @@ Options:
   --keep-stage             Print and keep the temporary staging directory.
   -h, --help               Show this help.
 
-The archive is rootless: .codex-plugin/, assets/, skills/, README.md, LICENSE,
+The archive is rootless: .codex-plugin/, assets/, skills/, templates/ (when present), README.md, LICENSE,
 and CODE_OF_CONDUCT.md sit at the archive root. Source-only repo files, hooks, tests,
 docs, and other harness manifests are intentionally not shipped.
 EOF
@@ -232,13 +233,12 @@ METADATA_ROOT="$(prepare_metadata_root "$METADATA_SOURCE")"
 
 # Pin tar.umask and extract with -p so staged modes are canonical 755/644
 # regardless of the builder's git config or process umask.
-git -C "$REPO_ROOT" -c tar.umask=0022 archive --format=tar "$REF" -- \
-  .codex-plugin \
-  CODE_OF_CONDUCT.md \
-  LICENSE \
-  README.md \
-  assets \
-  skills \
+payload_paths=(.codex-plugin CODE_OF_CONDUCT.md LICENSE README.md assets skills)
+# Older releases predate shared templates; package the selected ref's resources.
+if git -C "$REPO_ROOT" cat-file -e "$REF:templates" 2>/dev/null; then
+  payload_paths+=(templates)
+fi
+git -C "$REPO_ROOT" -c tar.umask=0022 archive --format=tar "$REF" -- "${payload_paths[@]}" \
   | tar -xpf - -C "$STAGE"
 
 VERSION="$(jq -r '.version // empty' "$STAGE/.codex-plugin/plugin.json")"
@@ -262,14 +262,13 @@ while IFS= read -r skill_dir; do
   skill_name="${skill_dir##*/}"
   metadata_file="$METADATA_ROOT/skills/$skill_name/agents/openai.yaml"
 
-  if [[ ! -f "$metadata_file" ]]; then
+  if [[ -f "$metadata_file" ]]; then
+    mkdir -p "$skill_dir/agents"
+    cp "$metadata_file" "$skill_dir/agents/openai.yaml"
+  elif [[ ! -f "$skill_dir/agents/openai.yaml" ]]; then
     echo "Missing OpenAI agent metadata for skill: $skill_name" >&2
     missing_metadata=1
-    continue
   fi
-
-  mkdir -p "$skill_dir/agents"
-  cp "$metadata_file" "$skill_dir/agents/openai.yaml"
 done < <(find "$STAGE/skills" -mindepth 1 -maxdepth 1 -type d -print | sort)
 
 if [[ "$missing_metadata" -ne 0 ]]; then

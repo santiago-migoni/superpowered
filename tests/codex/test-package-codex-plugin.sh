@@ -170,6 +170,13 @@ assert_contains "$archive_paths" "skills/brainstorming/SKILL.md" "archive includ
 assert_contains "$archive_paths" "skills/brainstorming/agents/openai.yaml" "archive includes OpenAI skill metadata"
 assert_contains "$archive_paths" "assets/app-icon.png" "archive includes app icon"
 assert_contains "$archive_paths" "assets/superpowers-small.svg" "archive includes composer icon"
+if git -C "$REPO_ROOT" cat-file -e HEAD:templates/CONSTITUTION.md 2>/dev/null; then
+  assert_contains "$archive_paths" "templates/CONSTITUTION.md" "archive includes product constitution template"
+  assert_contains "$archive_paths" "templates/README.md" "archive includes product template guide"
+  assert_equals "$(read_archive_file "$archive" templates/CONSTITUTION.md)" \
+    "$(git -C "$REPO_ROOT" show HEAD:templates/CONSTITUTION.md)" \
+    "archive preserves committed constitution template content"
+fi
 
 manifest_summary="$(read_archive_file "$archive" .codex-plugin/plugin.json | python3 -c 'import json,sys; data=json.load(sys.stdin); print("\t".join([data["name"], data["version"], data["skills"], str(data.get("hooks"))]))')"
 expected_version="$(python3 -c 'import json; print(json.load(open("'"$REPO_ROOT"'/.codex-plugin/plugin.json"))["version"])')"
@@ -269,6 +276,77 @@ else
   fail "package script rejects incomplete metadata source"
 fi
 assert_contains "$missing_output" "ERROR: metadata source is incomplete" "incomplete metadata reports clear error"
+
+# Freeze new resources even when this suite runs before they are committed.
+# The prior-package fixture deliberately has no metadata for managing-product.
+if [[ -f "$REPO_ROOT/skills/managing-product/agents/openai.yaml" ]]; then
+  fallback_repo="$TEST_ROOT/fallback-repo"
+  fallback_metadata="$TEST_ROOT/prior-package-metadata"
+  fallback_archive="$TEST_ROOT/fallback.zip"
+  git clone -q --no-local "$REPO_ROOT" "$fallback_repo"
+  cp "$SCRIPT_UNDER_TEST" "$fallback_repo/scripts/package-codex-plugin.sh"
+  mkdir -p "$fallback_repo/skills/managing-product" "$fallback_repo/templates"
+  cp -R "$REPO_ROOT/skills/managing-product/." "$fallback_repo/skills/managing-product/"
+  cp -R "$REPO_ROOT/templates/." "$fallback_repo/templates/"
+  # Also give an existing skill local metadata to verify external precedence.
+  mkdir -p "$fallback_repo/skills/brainstorming/agents"
+  cp "$REPO_ROOT/skills/managing-product/agents/openai.yaml" \
+    "$fallback_repo/skills/brainstorming/agents/openai.yaml"
+  git -C "$fallback_repo" add scripts/package-codex-plugin.sh skills templates
+  git -C "$fallback_repo" -c user.name='Package Test' -c user.email='package-test@example.invalid' \
+    -c core.hooksPath=/dev/null commit -q -m 'Freeze packaging regression fixture'
+  cp -R "$metadata_source" "$fallback_metadata"
+  rm -rf "$fallback_metadata/skills/managing-product"
+
+  # A dirty edit must not replace the fallback from the selected Git ref.
+  printf '\n# uncommitted fixture metadata\n' >> \
+    "$fallback_repo/skills/managing-product/agents/openai.yaml"
+  if fallback_output="$(bash "$fallback_repo/scripts/package-codex-plugin.sh" \
+    --allow-dirty --metadata-source "$fallback_metadata" --output "$fallback_archive" 2>&1)"; then
+    pass "package accepts prior metadata without the new skill"
+    fallback_paths="$(list_archive "$fallback_archive" | normalize_archive_paths)"
+    assert_contains "$fallback_paths" "skills/managing-product/SKILL.md" "fallback archive includes new skill"
+    assert_contains "$fallback_paths" "templates/CONSTITUTION.md" "fallback archive includes constitution template"
+    assert_contains "$fallback_paths" "templates/README.md" "fallback archive includes template guide"
+    assert_equals "$(read_archive_file "$fallback_archive" skills/managing-product/agents/openai.yaml)" \
+      "$(git -C "$fallback_repo" show HEAD:skills/managing-product/agents/openai.yaml)" \
+      "fallback uses metadata from selected ref, not dirty edits"
+    assert_equals "$(read_archive_file "$fallback_archive" skills/brainstorming/agents/openai.yaml)" \
+      "$(cat "$fallback_metadata/skills/brainstorming/agents/openai.yaml")" \
+      "external metadata takes precedence over bundled metadata"
+    fallback_tar_archive="$TEST_ROOT/fallback.tar.gz"
+    if fallback_tar_output="$(bash "$fallback_repo/scripts/package-codex-plugin.sh" \
+      --allow-dirty --metadata-source "$fallback_metadata" --output "$fallback_tar_archive" 2>&1)"; then
+      assert_equals "$(list_archive "$fallback_tar_archive" | normalize_archive_paths)" "$fallback_paths" \
+        "tar.gz fallback archive contains the same resources as zip"
+      assert_equals "$(read_archive_file "$fallback_tar_archive" skills/managing-product/agents/openai.yaml)" \
+        "$(git -C "$fallback_repo" show HEAD:skills/managing-product/agents/openai.yaml)" \
+        "tar.gz preserves bundled fallback metadata"
+    else
+      fail "tar.gz package accepts prior metadata without the new skill"
+      printf '%s\n' "$fallback_tar_output" | sed 's/^/      /'
+    fi
+  else
+    fail "package accepts prior metadata without the new skill"
+    printf '%s\n' "$fallback_output" | sed 's/^/      /'
+  fi
+
+  rm -rf "$fallback_metadata/skills/brainstorming"
+  # systematic-debugging has neither source nor bundled metadata in this fixture.
+  rm -rf "$fallback_metadata/skills/systematic-debugging"
+  set +e
+  fallback_missing_output="$(bash "$fallback_repo/scripts/package-codex-plugin.sh" \
+    --allow-dirty --metadata-source "$fallback_metadata" --output "$TEST_ROOT/fallback-missing.zip" 2>&1)"
+  fallback_missing_status=$?
+  set -e
+  if [[ "$fallback_missing_status" -ne 0 ]]; then
+    pass "fallback still rejects a skill missing metadata from both sources"
+  else
+    fail "fallback still rejects a skill missing metadata from both sources"
+  fi
+  assert_contains "$fallback_missing_output" "Missing OpenAI agent metadata for skill: systematic-debugging" \
+    "fallback names skill missing metadata from both sources"
+fi
 
 dirty_repo="$TEST_ROOT/dirty-repo"
 git clone -q --no-local "$REPO_ROOT" "$dirty_repo"

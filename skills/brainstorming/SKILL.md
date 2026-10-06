@@ -11,6 +11,33 @@ Start by classifying how much process the request needs, then work
 through your path: understand the context, refine the idea, present a
 design, and get your human partner's approval.
 
+## Product Direction Before Feature Design
+
+For a new project or feature, locate the product constitution before proposing
+feature approaches or a design. **REQUIRED SUB-SKILL:** Use
+superpowers:managing-product if the constitution is absent, unapproved, in
+review, superseded, equivalent documentation needs reconciliation, or a product
+conflict needs resolution. Establish applicable approved purpose, objectives,
+principles, and boundaries before feature design. Read-only exploration may
+continue while those decisions are pending.
+
+If an approved constitution applies, consult its relevant sections without
+another full interview or approval. Record the applicable principles,
+objectives, exclusions, and source version in the design: conversational for
+bounded changes, written for architectural work. Surface conflicts before
+executing affected work; changing product direction requires explicit approval.
+
+Product alignment does not authorize additional functionality. Keep features
+outside the requested scope as proposals until your human partner accepts them.
+Do not rewrite the constitution to justify a feature. A constitution's approval
+does not replace this skill's design, spec, or plan approvals.
+
+For a point correction or a read-only feasibility spike, retain the existing
+path without requiring a full constitution. Consult existing relevant product
+constraints. If the work expands into new functionality, apply the feature
+prerequisite before designing that expansion. Do not require architecture or
+roadmap documents at this stage.
+
 ## Establish Shared Understanding
 
 The outcome of brainstorming is an understanding your human partner can
@@ -141,6 +168,7 @@ your path and complete them in order.
 
 ```dot
 digraph brainstorming {
+    "Product direction prerequisite (new projects/features)" [shape=box];
     "Classify: spike / bounded / architectural" [shape=diamond];
     "Present question + probe (2-3 sentences)" [shape=box];
     "Ask clarifying questions (bounded)" [shape=box];
@@ -159,6 +187,7 @@ digraph brainstorming {
     "Invoke writing-plans skill" [shape=doublecircle];
     "Hidden complexity? Upgrade path" [shape=box];
 
+    "Product direction prerequisite (new projects/features)" -> "Classify: spike / bounded / architectural";
     "Classify: spike / bounded / architectural" -> "Present question + probe (2-3 sentences)" [label="spike"];
     "Classify: spike / bounded / architectural" -> "Ask clarifying questions (bounded)" [label="bounded"];
     "Classify: spike / bounded / architectural" -> "Explore project context" [label="architectural"];

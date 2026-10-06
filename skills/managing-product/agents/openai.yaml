@@ -1,0 +1,4 @@
+interface:
+  display_name: "Managing Product"
+  short_description: "Define and maintain approved product direction"
+  default_prompt: "Use $managing-product to create or review this product's constitution, keeping proposals and approved decisions distinct."
