@@ -312,11 +312,19 @@ Restart any active Muse sessions after installing so the `SessionStart` hook tak
 ## The Basic Workflow
 
 In this Superpowered fork, new projects and features first establish applicable
-approved product direction through **managing-product**. It creates or reviews
+approved product direction through **writing-constitution**. It creates or reviews
 `docs/superpowers/CONSTITUTION.md` using the [product template](templates/CONSTITUTION.md).
 An existing approved constitution is consulted without repeating the interview.
 Point corrections and read-only feasibility probes keep their existing paths.
 Product alignment does not authorize features outside the requested scope.
+
+**writing-design** creates, reviews and maintains the relevant permanent
+technical descriptions: `ARCHITECTURE.md` for responsibilities and decisions,
+`STRUCTURE.md` for code organization, and `INFRASTRUCTURE.md` for execution and
+operation. It reuses [the templates](templates/README.md), separates approval,
+implementation and verification, and updates only affected sections. Missing
+technical documents do not block a bounded correction; documentation approval
+does not authorize implementation or deployment.
 
 1. **brainstorming** - Activates before writing code. Refines rough ideas through questions, explores alternatives, presents design in sections for validation. Saves design document.
 
@@ -361,7 +369,8 @@ Superpowers is built by [Jesse Vincent](https://blog.fsck.com) and the rest of t
 - **diagnosing-superpowers** - Work out what went wrong in a session, with evidence; export a scrubbed bundle or file an issue
 
 **Collaboration** 
-- **managing-product** - Product purpose, principles, objectives, boundaries, and constitution approval
+- **writing-constitution** - Product purpose, principles, objectives, boundaries, and constitution approval
+- **writing-design** - Architecture, code structure and infrastructure documentation with source and decision references
 - **brainstorming** - Socratic design refinement
 - **writing-plans** - Detailed implementation plans
 - **executing-plans** - Inline plan execution: one context, one final review

@@ -4,7 +4,7 @@ Fecha: 2026-10-06\
 Estado: propuesta de mejora; implementación pendiente\
 Base: fork de Superpowers 6.4.2
 
-Superpowered ampliará el flujo de Superpowers con tres documentos permanentes: `CONSTITUTION.md`, `ARCHITECTURE.md` y `ROADMAP.md`. Su función será mantener el propósito, las decisiones técnicas y las prioridades del producto entre funcionalidades y sesiones. Las especificaciones y los planes existentes seguirán desarrollando cambios concretos.
+Superpowered ampliará el flujo de Superpowers con cinco documentos permanentes: `CONSTITUTION.md`, `ARCHITECTURE.md`, `STRUCTURE.md`, `INFRASTRUCTURE.md` y `ROADMAP.md`. Su función será mantener el propósito, las decisiones técnicas, la organización del código, la operación y las prioridades del producto entre funcionalidades y sesiones. Las especificaciones y los planes existentes seguirán desarrollando cambios concretos.
 
 ## Problema que queremos resolver
 
@@ -23,6 +23,8 @@ docs/
 └── superpowers/
     ├── CONSTITUTION.md
     ├── ARCHITECTURE.md
+    ├── STRUCTURE.md
+    ├── INFRASTRUCTURE.md
     ├── ROADMAP.md
     ├── specs/
     │   └── YYYY-MM-DD-<tema>-design.md
@@ -30,7 +32,7 @@ docs/
         └── YYYY-MM-DD-<funcionalidad>.md
 ```
 
-Los tres documentos se crearán en cada proyecto que adopte este flujo. Sus nombres son convenciones del producto desarrollado, no tres archivos globales compartidos por todos los proyectos.
+Los documentos corresponden a cada proyecto que adopte este flujo. Se crearán según la información disponible y el trabajo solicitado, reutilizando fuentes existentes. Sus nombres son convenciones del producto desarrollado; no son archivos globales compartidos por todos los proyectos ni una obligación de completar todos antes de cualquier tarea.
 
 La carpeta `.superpowers/` mantendrá su función de espacio temporal de ejecución: registros de progreso, instrucciones por tarea, informes, paquetes de revisión y salidas de pruebas. Ningún documento permanente dependerá de que ese espacio sobreviva a la limpieza del plan.
 
@@ -55,7 +57,7 @@ La misión, la visión y los principios deben ser relativamente estables. Los co
 
 ## ARCHITECTURE.md
 
-Responde: **¿cómo está construido el producto y qué decisiones técnicas lo sostienen?**
+Responde: **¿cómo colaboran las partes del sistema y qué decisiones técnicas lo sostienen?**
 
 Debe contener:
 
@@ -68,6 +70,37 @@ Debe contener:
 - Cambios propuestos, claramente distinguidos del estado actual.
 
 La descripción principal debe representar lo implementado. Una decisión aprobada pero aún no ejecutada conserva ese estado explícito. Cuando una implementación cambia componentes, contratos o flujos, la actualización de arquitectura forma parte de la misma entrega.
+
+## STRUCTURE.md
+
+Responde: **¿cómo está organizado el código y dónde pertenece cada contenido?**
+
+Debe contener:
+
+- Repositorios cubiertos y revisiones inspeccionadas.
+- Carpetas y archivos relevantes, con su propósito.
+- Módulos, paquetes, puntos de entrada y ubicación de dependencias.
+- Correspondencia entre módulos y componentes arquitectónicos.
+- Ubicación y convenciones de código, pruebas, documentación y configuración.
+- Reorganizaciones propuestas, separadas de la estructura existente.
+
+Describe la organización observada y distingue las convenciones existentes de las reglas propuestas. Referencia las responsabilidades y decisiones en arquitectura. Una estructura prevista conserva ese carácter hasta que el código y las comprobaciones correspondientes sustenten su implementación.
+
+## INFRASTRUCTURE.md
+
+Responde: **¿con qué recursos se ejecuta y opera el software en cada entorno?**
+
+Debe contener:
+
+- Entornos y recursos de ejecución.
+- Redes, accesos, conexiones y exposición de servicios.
+- Almacenamiento, backups y recuperación.
+- Fuentes de configuración y referencias a secretos, sin sus valores.
+- Despliegue, actualización, rollback y procedimientos operativos existentes.
+- Observabilidad, capacidad y límites operativos conocidos.
+- Cambios propuestos o aprobados pero aún no desplegados.
+
+La configuración declarada, el despliegue observado y el comportamiento verificado son hechos distintos. Cada afirmación operativa debe identificar su entorno, fuente y evidencia disponible; las verificaciones pendientes quedan explícitas. Los procedimientos detallados pueden conservarse en runbooks canónicos enlazados.
 
 ## ROADMAP.md
 
@@ -90,7 +123,9 @@ Una iniciativa puede estar **entregada** y tener su **resultado pendiente de val
 
 ## Relación entre los documentos
 
-La constitución establece propósito y principios. La arquitectura explica la estructura actual y sus restricciones. El roadmap selecciona resultados y prioridades. Las especificaciones concretan cada cambio y los planes organizan su implementación.
+La constitución establece propósito y principios. La arquitectura explica responsabilidades, relaciones y decisiones. La estructura ubica el código y sus convenciones. La infraestructura describe recursos y operación por entorno. El roadmap selecciona resultados y prioridades. Las especificaciones concretan cada cambio y los planes organizan su implementación.
+
+Cada tema tiene una fuente principal. Una elección de base de datos y la propiedad de sus datos se documentan en arquitectura; la ubicación del módulo de acceso, en estructura; el despliegue, almacenamiento y recuperación, en infraestructura. Los documentos se enlazan sin mantener copias de las mismas decisiones.
 
 Cada especificación debe identificar los objetivos o iniciativas a los que contribuye, los principios relevantes, el impacto arquitectónico y la evidencia necesaria para validar el resultado. Las referencias deben apuntar a las versiones o commits usados cuando sea necesario reproducir una decisión; se evita copiar documentos completos en cada especificación.
 
@@ -114,13 +149,13 @@ Si los documentos todavía no existen, el flujo debe ayudar a construirlos con i
 
 Los documentos se consultan cuando son relevantes y se actualizan cuando cambia aquello que describen. No es necesario reescribirlos ni pedir su aprobación completa para cada tarea.
 
-Los cambios en misión, visión, principios o prioridades requieren una decisión explícita del usuario. Las actualizaciones descriptivas de arquitectura derivadas de una implementación aprobada pueden acompañar esa implementación. El roadmap puede registrar la entrega y su evidencia sin alterar automáticamente las prioridades restantes.
+Los cambios en misión, visión, principios o prioridades requieren una decisión explícita del usuario. Las actualizaciones descriptivas de arquitectura, estructura e infraestructura derivadas de una implementación aprobada pueden acompañar esa implementación. Las nuevas decisiones técnicas u operativas conservan la aprobación aplicable; describir lo observado no permite inferirla. El roadmap puede registrar la entrega y su evidencia sin alterar automáticamente las prioridades restantes.
 
 Cada documento debe indicar su estado y última revisión. Las decisiones de producto relevantes se conservan en los documentos versionados o en las especificaciones correspondientes antes de eliminar artefactos temporales. Una observación del agente se distingue de una decisión aprobada y de un resultado observado.
 
 ## Alcance de una primera implementación
 
-1. Definir plantillas concisas para los tres documentos, con sus reglas de estado y referencias.
+1. Definir plantillas concisas para los cinco documentos, con sus reglas de estado y referencias.
 2. Incorporar un procedimiento para crearlos o revisar los existentes, aprovechando documentación previa y evitando fuentes contradictorias.
 3. Conectar las skills de diseño, planificación, revisión y cierre con esas referencias.
 4. Validar el flujo en un proyecto real mediante sesiones nuevas y continuidad entre cambios.
@@ -129,11 +164,12 @@ Esta propuesta no modifica todavía las skills, los manifiestos, el nombre insta
 
 ## Criterios de aceptación de la mejora
 
-- Un proyecto puede generar y conservar los tres documentos en `docs/superpowers/`.
+- Un proyecto puede generar y conservar los cinco documentos en `docs/superpowers/`, según el alcance del trabajo y sin duplicar fuentes canónicas.
 - Una sesión nueva localiza las referencias sin depender de la conversación anterior.
 - Una funcionalidad puede trazarse desde un objetivo de producto hasta su especificación, plan y evidencia.
 - Una propuesta que contradiga un principio o exclusión hace visible el conflicto antes de implementarlo.
 - Un cambio arquitectónico actualiza la descripción del estado real y distingue lo pendiente.
+- Una reorganización del código actualiza estructura; un cambio operativo actualiza infraestructura y distingue configuración, despliegue y verificación.
 - El roadmap puede registrar una entrega con validación de resultado pendiente.
 - Un cambio acotado no provoca la reescritura completa de los documentos ni aprobaciones redundantes.
 - Limpiar el espacio temporal de ejecución conserva toda la documentación permanente.

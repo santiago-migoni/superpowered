@@ -287,38 +287,56 @@ fi
 assert_contains "$missing_output" "ERROR: metadata source is incomplete" "incomplete metadata reports clear error"
 
 # Freeze new resources even when this suite runs before they are committed.
-# The prior-package fixture deliberately has no metadata for managing-product.
-if [[ -f "$REPO_ROOT/skills/managing-product/agents/openai.yaml" ]]; then
+# The prior-package fixture deliberately lacks metadata for the fork skills.
+if [[ -f "$REPO_ROOT/skills/writing-constitution/agents/openai.yaml" ]]; then
   fallback_repo="$TEST_ROOT/fallback-repo"
   fallback_metadata="$TEST_ROOT/prior-package-metadata"
   fallback_archive="$TEST_ROOT/fallback.zip"
   git clone -q --no-local "$REPO_ROOT" "$fallback_repo"
   cp "$SCRIPT_UNDER_TEST" "$fallback_repo/scripts/package-codex-plugin.sh"
-  mkdir -p "$fallback_repo/skills/managing-product" "$fallback_repo/templates"
-  cp -R "$REPO_ROOT/skills/managing-product/." "$fallback_repo/skills/managing-product/"
+  # Freeze the current skill set, including removals from a rename.
+  rm -rf "$fallback_repo/skills"
+  cp -R "$REPO_ROOT/skills" "$fallback_repo/skills"
+  mkdir -p "$fallback_repo/templates"
   cp -R "$REPO_ROOT/templates/." "$fallback_repo/templates/"
   # Also give an existing skill local metadata to verify external precedence.
   mkdir -p "$fallback_repo/skills/brainstorming/agents"
-  cp "$REPO_ROOT/skills/managing-product/agents/openai.yaml" \
+  cp "$REPO_ROOT/skills/writing-constitution/agents/openai.yaml" \
     "$fallback_repo/skills/brainstorming/agents/openai.yaml"
   git -C "$fallback_repo" add scripts/package-codex-plugin.sh skills templates
   git -C "$fallback_repo" -c user.name='Package Test' -c user.email='package-test@example.invalid' \
     -c core.hooksPath=/dev/null commit -q -m 'Freeze packaging regression fixture'
   cp -R "$metadata_source" "$fallback_metadata"
-  rm -rf "$fallback_metadata/skills/managing-product"
+  rm -rf "$fallback_metadata/skills/writing-constitution" "$fallback_metadata/skills/writing-design"
 
   # A dirty edit must not replace the fallback from the selected Git ref.
   printf '\n# uncommitted fixture metadata\n' >> \
-    "$fallback_repo/skills/managing-product/agents/openai.yaml"
+    "$fallback_repo/skills/writing-constitution/agents/openai.yaml"
   if fallback_output="$(bash "$fallback_repo/scripts/package-codex-plugin.sh" \
     --allow-dirty --metadata-source "$fallback_metadata" --output "$fallback_archive" 2>&1)"; then
     pass "package accepts prior metadata without the new skill"
     fallback_paths="$(list_archive "$fallback_archive" | normalize_archive_paths)"
-    assert_contains "$fallback_paths" "skills/managing-product/SKILL.md" "fallback archive includes new skill"
+    assert_contains "$fallback_paths" "skills/writing-constitution/SKILL.md" "fallback archive includes renamed skill"
+    assert_not_matches "$fallback_paths" "^skills/managing-product/" "fallback archive excludes replaced skill"
     assert_contains "$fallback_paths" "templates/CONSTITUTION.md" "fallback archive includes constitution template"
     assert_contains "$fallback_paths" "templates/README.md" "fallback archive includes template guide"
-    assert_equals "$(read_archive_file "$fallback_archive" skills/managing-product/agents/openai.yaml)" \
-      "$(git -C "$fallback_repo" show HEAD:skills/managing-product/agents/openai.yaml)" \
+    assert_contains "$fallback_paths" "skills/writing-design/SKILL.md" "fallback archive includes technical documentation skill"
+    for template in ARCHITECTURE STRUCTURE INFRASTRUCTURE; do
+      template_path="templates/$template.md"
+      assert_contains "$fallback_paths" "$template_path" "fallback archive includes $template template"
+      assert_equals "$(read_archive_file "$fallback_archive" "$template_path")" \
+        "$(git -C "$fallback_repo" show "HEAD:$template_path")" \
+        "fallback archive preserves $template template bytes"
+    done
+    if [[ -f "$fallback_repo/skills/writing-design/agents/openai.yaml" ]]; then
+      assert_equals "$(read_archive_file "$fallback_archive" skills/writing-design/agents/openai.yaml)" \
+        "$(git -C "$fallback_repo" show HEAD:skills/writing-design/agents/openai.yaml)" \
+        "technical documentation skill uses bundled fallback metadata"
+    else
+      fail "technical documentation skill has bundled fallback metadata"
+    fi
+    assert_equals "$(read_archive_file "$fallback_archive" skills/writing-constitution/agents/openai.yaml)" \
+      "$(git -C "$fallback_repo" show HEAD:skills/writing-constitution/agents/openai.yaml)" \
       "fallback uses metadata from selected ref, not dirty edits"
     assert_equals "$(read_archive_file "$fallback_archive" skills/brainstorming/agents/openai.yaml)" \
       "$(cat "$fallback_metadata/skills/brainstorming/agents/openai.yaml")" \
@@ -328,9 +346,22 @@ if [[ -f "$REPO_ROOT/skills/managing-product/agents/openai.yaml" ]]; then
       --allow-dirty --metadata-source "$fallback_metadata" --output "$fallback_tar_archive" 2>&1)"; then
       assert_equals "$(list_archive "$fallback_tar_archive" | normalize_archive_paths)" "$fallback_paths" \
         "tar.gz fallback archive contains the same resources as zip"
-      assert_equals "$(read_archive_file "$fallback_tar_archive" skills/managing-product/agents/openai.yaml)" \
-        "$(git -C "$fallback_repo" show HEAD:skills/managing-product/agents/openai.yaml)" \
+      assert_equals "$(read_archive_file "$fallback_tar_archive" skills/writing-constitution/agents/openai.yaml)" \
+        "$(git -C "$fallback_repo" show HEAD:skills/writing-constitution/agents/openai.yaml)" \
         "tar.gz preserves bundled fallback metadata"
+      if [[ -f "$fallback_repo/skills/writing-design/agents/openai.yaml" ]]; then
+        assert_equals "$(read_archive_file "$fallback_tar_archive" skills/writing-design/agents/openai.yaml)" \
+          "$(git -C "$fallback_repo" show HEAD:skills/writing-design/agents/openai.yaml)" \
+          "tar.gz preserves technical documentation skill metadata"
+      else
+        fail "tar.gz technical documentation skill has bundled metadata"
+      fi
+      for template in ARCHITECTURE STRUCTURE INFRASTRUCTURE; do
+        template_path="templates/$template.md"
+        assert_equals "$(read_archive_file "$fallback_tar_archive" "$template_path")" \
+          "$(git -C "$fallback_repo" show "HEAD:$template_path")" \
+          "tar.gz preserves $template template bytes"
+      done
     else
       fail "tar.gz package accepts prior metadata without the new skill"
       printf '%s\n' "$fallback_tar_output" | sed 's/^/      /'

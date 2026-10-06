@@ -1,7 +1,12 @@
 # Writing Design: Technical Documentation Workflow
 
 Date: 2026-10-06
-Status: proposed design; written-spec review pending
+Status: implemented and verified in source; installed-host validation pending
+Approval: the human partner replied "Si, aprobada." in this chat on 2026-10-06,
+approving the written specification presented at Git revision `806b229`.
+Execution authorization: the human partner subsequently instructed direct
+implementation without using Superpowered's workflow. The implementation-plan
+review and method-selection gates do not apply to this execution.
 Scope: create, review and maintain architecture, structure and infrastructure
 documents without replacing feature design or implementation planning
 
@@ -12,8 +17,8 @@ technical documents, alongside `writing-constitution` and a future
 `writing-roadmap`. The spelling is `writing-design`, as agreed in the naming
 discussion. Existing templates and metadata rules are reused.
 
-This specification proposes the skill's detailed workflow and integration. It
-does not record approval of those details, implementation or installation.
+This specification defines the approved workflow and integration. Its approval
+does not record implementation, installation or approval of an execution plan.
 
 ## Responsibility and Document Ownership
 
@@ -173,5 +178,6 @@ performed.
 
 ## Next Stage
 
-Review this written specification before creating the implementation plan.
-Plan review and execution-method selection precede production skill changes.
+The authorized source implementation and checks are recorded in
+[the evaluation report](2026-10-06-writing-design-eval-results.md). Installation
+and automatic activation in Codex App have not been performed for this update.

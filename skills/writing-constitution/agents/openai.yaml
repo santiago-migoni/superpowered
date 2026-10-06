@@ -1,0 +1,4 @@
+interface:
+  display_name: "Writing Constitution"
+  short_description: "Define and maintain approved product direction"
+  default_prompt: "Use $writing-constitution to create or review this product's constitution, keeping proposals and approved decisions distinct."

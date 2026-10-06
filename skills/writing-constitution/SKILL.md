@@ -1,9 +1,9 @@
 ---
-name: managing-product
+name: writing-constitution
 description: Use when defining or reviewing product purpose, principles, objectives, or boundaries, creating or updating a product constitution, or preparing a new feature without an applicable approved constitution.
 ---
 
-# Managing Product
+# Writing Constitution
 
 Establish durable product direction through a constitution. Product alignment
 does not authorize a feature: each change also needs an approved scope.

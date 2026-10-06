@@ -1,8 +1,17 @@
 # Product Documentation Templates
 
-These templates are reusable Superpowered resources. Each project's constitution
-is stored in `docs/superpowers/CONSTITUTION.md` and tracked in Git.
-`templates/CONSTITUTION.md` is not the constitution of the fork itself.
+These templates are reusable Superpowered resources. Each project's documents
+are stored in `docs/superpowers/` and tracked in Git:
+
+- [CONSTITUTION.md](CONSTITUTION.md): durable product direction.
+- [ARCHITECTURE.md](ARCHITECTURE.md): system responsibilities, relationships and technical decisions.
+- [STRUCTURE.md](STRUCTURE.md): repository and code organization.
+- [INFRASTRUCTURE.md](INFRASTRUCTURE.md): execution resources, environments and operation.
+
+These are templates for adopting projects, not descriptions of the fork itself.
+Use `writing-constitution` for constitutions and
+[writing-design](../skills/writing-design/SKILL.md) for the technical documents.
+Roadmap management and plugin language configuration are subsequent steps.
 
 ## Create or Review a Constitution
 
@@ -31,24 +40,24 @@ their own scope; they do not replace the document's status.
 |---|---|
 | `title` | Document title. |
 | `status` | A single value: `draft`, `approved`, `in_review`, or `superseded`. |
-| `version` | Content version in the format `v001`, `v002`, etc. Increment when product decisions change; editorial corrections do not require a new version. |
+| `version` | Content version in the format `v001`, `v002`, etc. Increment when decisions or the described system, code organization or infrastructure change; editorial corrections do not require a new version. |
 | `responsible` | Text identifying the person or role that approves the document. |
-| `created_at` | Creation date of the project's constitution; preserve it. |
+| `created_at` | Creation date of the project's document; preserve it. |
 | `updated_at` | Date of the most recent edit. |
 | `reviewed_at` | Date of the most recent content review; editing does not imply reviewing. |
 | `approval_reference` | Verifiable reference identifying who approved this version, when, and where the decision was recorded. |
 
 Use quoted text for dates in `YYYY-MM-DD` format. `null` indicates pending
 information; do not invent values. Set `created_at` when creating the project's
-constitution, rather than using the template's creation date.
+document, rather than using the template's creation date.
 
-- **`draft`:** contains product decisions pending approval.
+- **`draft`:** contains content or decisions pending review or approval.
 - **`approved`:** the responsible person or role approved this version;
   measurements may remain pending if they are identified and explicitly accepted.
 - **`in_review`:** changes are proposed. Identify the last approved version
   through a reachable Git revision or a durable version snapshot, and
   distinguish pending changes.
-- **`superseded`:** a canonical constitution replaces this one; link to it.
+- **`superseded`:** a canonical document replaces this one; link to it.
 
 Before setting `approved`, complete `responsible` and `approval_reference` for
 the current version. When proposing changes to approved decisions, use
@@ -90,9 +99,78 @@ and delivery outcomes belong in the roadmap; technical components and contracts
 belong in the architecture. A task does not require approval of the entire
 constitution again.
 
-Use [managing-product](../skills/managing-product/SKILL.md) to create, review,
+Use [writing-constitution](../skills/writing-constitution/SKILL.md) to create, review,
 or update the constitution. [Brainstorming](../skills/brainstorming/SKILL.md)
 requires applicable approved product direction before designing new features.
 Point corrections and read-only feasibility probes retain their existing paths.
 Plugin language configuration is a subsequent step; for now, generated content
 follows the language requested by your human partner.
+
+## Create or Maintain an Architecture
+
+1. Locate the existing canonical architecture and relevant technical decisions.
+   Reuse them or agree on migration before creating another source. Reference
+   the applicable constitution and source version without copying its content.
+2. Inspect relevant code, configuration, contracts and available runtime
+   evidence. Record the revision or identified snapshot used. Describe what
+   exists now; if there is no implementation, state that explicitly and retain
+   the intended design in Architectural Decisions and Proposed Changes.
+3. Keep three facts separate: decision approval, implementation and verification.
+   A document marked `approved` can contain approved choices not yet implemented.
+   Use implementation references for implemented claims, and actual checks with
+   their environment and limits for verified claims. Leave unknowns explicit.
+4. Keep stable ADR identifiers and reference existing decision records. Record
+   who decided, when, why and with what consequences. Existing code establishes
+   implementation, not business or architectural approval by itself.
+5. Update affected components, contracts and flows with the delivery that
+   changes them. Move a planned component into the implemented description only
+   when supported by implementation evidence; retain pending runtime checks.
+   Record the source and affected version in the change history.
+6. Proposed technical choices require the applicable design approval. Descriptive
+   updates resulting from an approved implementation can accompany that delivery
+   without reopening unchanged decisions or demanding whole-document approval.
+   A new or changed architectural decision still needs an explicit decision.
+   Preserve the previous approved content and evidence before changing it, using
+   the Git revision or durable snapshot rules above.
+7. Keep priorities in the roadmap and delivery tasks in plans. Consult and update
+   only relevant sections; the existence of this template does not require an
+   architecture interview or a complete rewrite for every bounded correction.
+
+The document metadata describe its review and approval state. Per-decision
+statuses and implementation states describe their own scope. Reviewing alone
+does not authorize edits or changes to `reviewed_at`; record approval only for
+the version actually presented. Architectural descriptions and evidence remain
+in permanent versioned documentation, independent of `.superpowers/` cleanup.
+
+## Keep the Technical Documents Focused
+
+| Document | Canonical content | References to related content |
+|---|---|---|
+| Architecture | Logical components, responsibilities, contracts, flows, constraints and decision rationale. | Code locations in Structure; execution resources and operational evidence in Infrastructure. |
+| Structure | Repositories, paths, modules, entry points and placement or naming conventions. | Component responsibilities and architectural decisions in Architecture; deployment procedures in Infrastructure or existing runbooks. |
+| Infrastructure | Environments, resources, networking, persistence configuration, deployment and operational mechanisms. | Logical contracts and data ownership in Architecture; configuration file locations in Structure. |
+
+A decision that affects several documents has one canonical record, normally an
+architectural decision. The other documents reference it and describe their own
+affected facts. For example, Architecture records the database choice and data
+ownership; Structure records the data-access module location; Infrastructure
+records database provisioning, storage and recovery evidence.
+
+Create or maintain Structure by inspecting the relevant repository revision,
+recording actual paths and conventions, and mapping modules to architectural
+components. Keep proposed reorganizations separate until implemented. An
+observed convention does not by itself establish approval of a new rule.
+
+Create or maintain Infrastructure from identified configuration and available
+runtime evidence for each environment. Distinguish declared resources from
+observed deployment and verified behavior. Reference canonical operational
+procedures and secret locations without copying secret values. If there is no
+deployed environment, state that explicitly and record intended resources as
+proposals; do not fabricate operational results.
+
+Apply the shared metadata, approval preservation and source-reference rules to
+both documents. Update only affected sections when code organization or
+infrastructure changes. Existing documents and runbooks remain canonical unless
+a migration is agreed; reference them rather than maintain competing copies.
+Document creation is proportional to the project and requested work. These
+templates do not make every document a prerequisite for every task.

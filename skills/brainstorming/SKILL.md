@@ -15,7 +15,7 @@ design, and get your human partner's approval.
 
 For a new project or feature, locate the product constitution before proposing
 feature approaches or a design. **REQUIRED SUB-SKILL:** Use
-superpowers:managing-product if the constitution is absent, unapproved, in
+superpowers:writing-constitution if the constitution is absent, unapproved, in
 review, superseded, equivalent documentation needs reconciliation, or a product
 conflict needs resolution. Establish applicable approved purpose, objectives,
 principles, and boundaries before feature design. Read-only exploration may
@@ -37,6 +37,23 @@ path without requiring a full constitution. Consult existing relevant product
 constraints. If the work expands into new functionality, apply the feature
 prerequisite before designing that expansion. Do not require architecture or
 roadmap documents at this stage.
+
+## Technical Context and Permanent Descriptions
+
+Consult relevant existing architecture, structure and infrastructure documents
+alongside code and configuration. Identify their source versions, constraints
+and the descriptions affected by the requested change. Missing technical
+documents do not add a prerequisite or another interview to a bounded task.
+
+When creating, reviewing or maintaining those documents is part of authorized
+work, **REQUIRED SUB-SKILL:** Use writing-design for that portion.
+Reading technical context during feature design does not by itself authorize
+document edits or new technical decisions. Proposed choices remain distinct
+from implemented descriptions until supported by implementation evidence.
+
+Keep this skill's feature scope, design and approval paths. Permanent-document
+maintenance does not restart an unchanged design or replace the writing-plans
+handoff; update affected descriptions with the authorized delivery.
 
 ## Establish Shared Understanding
 

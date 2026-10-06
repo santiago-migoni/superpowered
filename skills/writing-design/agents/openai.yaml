@@ -1,0 +1,4 @@
+interface:
+  display_name: "Writing Design"
+  short_description: "Maintain architecture, structure and infrastructure docs"
+  default_prompt: "Use $writing-design to create, review or update the relevant technical documents, keeping decisions, implementation and verification distinct."
