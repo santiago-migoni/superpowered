@@ -170,6 +170,13 @@ assert_contains "$archive_paths" "skills/brainstorming/SKILL.md" "archive includ
 assert_contains "$archive_paths" "skills/brainstorming/agents/openai.yaml" "archive includes OpenAI skill metadata"
 assert_contains "$archive_paths" "assets/app-icon.png" "archive includes app icon"
 assert_contains "$archive_paths" "assets/superpowers-small.svg" "archive includes composer icon"
+for field in logo composerIcon; do
+  icon_path="$(read_archive_file "$archive" .codex-plugin/plugin.json | python3 -c 'import json,sys; print(json.load(sys.stdin)["interface"][sys.argv[1]].removeprefix("./"))' "$field")"
+  assert_contains "$archive_paths" "$icon_path" "archive includes referenced $field"
+  assert_equals "$(shasum -a 256 "$extracted/$icon_path" | awk '{print $1}')" \
+    "$(git -C "$REPO_ROOT" show "HEAD:$icon_path" | shasum -a 256 | awk '{print $1}')" \
+    "archive preserves committed $field bytes"
+done
 if git -C "$REPO_ROOT" cat-file -e HEAD:templates/CONSTITUTION.md 2>/dev/null; then
   assert_contains "$archive_paths" "templates/CONSTITUTION.md" "archive includes product constitution template"
   assert_contains "$archive_paths" "templates/README.md" "archive includes product template guide"
