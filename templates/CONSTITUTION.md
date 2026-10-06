@@ -69,10 +69,14 @@ and plans. -->
 - **Criterion status:** proposed
 
 <!-- An approved criterion defines how to evaluate success; it does not prove
-that success has been achieved. Outcomes for each stage are recorded in the
-roadmap. -->
+that success has been achieved. Describe a product-level observable outcome.
+Field-by-field acceptance checks and delivery outcomes belong in the increment's
+design or existing scope record, linked to this criterion. -->
 
 ## Boundaries and Exclusions
+
+<!-- State product boundaries that apply across increments. Record what a
+particular delivery includes or excludes in its design or existing scope record. -->
 
 - **Boundaries:** [Product constraints that proposals must respect.]
 - **Out of scope:** [Excluded problems, users, or capabilities.]

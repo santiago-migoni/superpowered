@@ -38,6 +38,15 @@ or business priority.
 
 1. Recover known decisions and their sources. Summarize what is confirmed,
    proposed, and unknown; do not repeat answered questions.
+   Organize them by document: the constitution holds durable user outcomes,
+   product principles, product-level success criteria, and boundaries across
+   increments. Field lists, interface and persistence choices, delivery
+   exclusions, and acceptance checks belong to the increment's design or
+   existing scope record. Connect that scope to the applicable PRI-, OBJ-,
+   and EXI- identifiers and constitution version. If no design exists yet,
+   retain the scope in the handoff to brainstorming; no extra document is
+   required. A feature request can support an existing objective; a new
+   objective expresses a distinct durable user outcome, not the delivery itself.
 2. Ask short questions, one at a time, starting with the problem, people served,
    and value. Offer wording your human partner can correct. Unknown baselines,
    targets, and dates remain explicit open items.

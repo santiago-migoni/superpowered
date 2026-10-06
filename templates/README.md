@@ -73,6 +73,14 @@ include its Git revision or durable snapshot reference.
 
 ## Proportional Use
 
+The constitution contains durable user outcomes, product-level success criteria,
+and boundaries across increments. Keep field lists, interface and persistence
+choices, delivery exclusions, and acceptance checks in the increment's design
+or existing scope record. Link that scope to the applicable PRI-, OBJ-, and
+EXI- identifiers and constitution version. Before a design exists, retain the
+requested scope in the conversational handoff to brainstorming; this does not
+require an additional document or authorize a design or plan automatically.
+
 Consult the sections relevant to the task. A bounded change can reference
 applicable principles or objectives in its conversational design; using this
 template does not require an additional specification or plan.
