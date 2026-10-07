@@ -14,12 +14,34 @@ optional expected_head (full SHA), milestones [{commit, allowed_paths,
 files: {repo_relative_path: sha256}}], references [{consumer_commit,
 consumer_path, source_commit, source_path, sha256}], protected [{path,
 sha256 (null means absent), index (exact git ls-files --stage -z output)}],
-forbidden_new_globs and existing_paths. References must contain the literal
-SOURCE_SHA:SOURCE_PATH pin in the consumer. A SHA256 covers complete file bytes.
+forbidden_new_globs and existing_paths. References must contain the complete
+SOURCE_SHA:SOURCE_PATH token in plain text, quotes, backticks, angle brackets
+or a Markdown link target. Quoted tokens are compared whole, including spaces
+and parentheses. Plain tokens may end with sentence punctuation (.,;:!?);
+quote paths containing whitespace or trailing punctuation to disambiguate them.
+A SHA256 covers complete file bytes.
 Milestone changed paths are compared to the first parent (empty tree for a root).
 This checker reads state; it does not initialize Git, commit, modify files or
 evaluate human approval, semantic scope, automatic skill activation or outcomes.
 """
+
+
+def contains_pin(text, pin):
+    # Consume complete formatted tokens before bare words: delimiters inside
+    # a quoted filename must not make its prefix look like a separate pin.
+    tokens = re.finditer(
+        r"(?P<quote>`+|[\"'])(?P<quoted>[^\n]*?)(?P=quote)"
+        r"|<(?P<angle>[^<>\n]*)>"
+        r"|\[[^\]\n]*\]\((?P<link>[^\n]*?)\)"
+        r"|(?P<bare>\S+)", text)
+    for token in tokens:
+        if token.group("bare") is not None:
+            value = token.group("bare")
+            if value == pin or value.rstrip(".,;:!?") == pin:
+                return True
+        elif any(token.group(group) == pin for group in ("quoted", "angle", "link")):
+            return True
+    return False
 
 
 def check(expectations):
@@ -87,7 +109,8 @@ def check(expectations):
         path = relative(ref["source_path"])
         expect(digest(blob(source, path)) == ref["sha256"], f"approved base hash mismatch: {source}:{path}")
         consumer = blob(ref["consumer_commit"], ref["consumer_path"]).decode()
-        expect(source + ":" + path in consumer, f"missing expected approved pin in {ref['consumer_path']}")
+        expect(contains_pin(consumer, source + ":" + path),
+               f"missing expected approved pin in {ref['consumer_path']}")
     for item in expectations.get("protected", []):
         path = relative(item["path"])
         actual = root / path

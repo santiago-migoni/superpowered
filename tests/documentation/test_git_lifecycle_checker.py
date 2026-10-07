@@ -73,6 +73,35 @@ class LifecycleCheckerTests(unittest.TestCase):
         e["milestones"][0]["files"]["SPEC.md"] = hashlib.sha256(b"changed v002\n").hexdigest()
         self.check(e, False)
 
+    def test_pin_prefix_collisions_are_rejected(self):
+        pin = f"{self.base}:SPEC.md"
+        for wrong_pin in (pin + ".proposal", pin + "/other", pin + "-old",
+                          pin + "_backup", pin + "(proposal)", pin + " backup",
+                          "f" + pin, "prefix/" + pin):
+            with self.subTest(pin=wrong_pin):
+                self.write("PLAN.md", f"Approved base: `{wrong_pin}`\n")
+                approval = self.commit(["PLAN.md"])
+                e = self.expected()
+                e["references"] = [{"consumer_commit": approval, "consumer_path": "PLAN.md",
+                                    "source_commit": self.base, "source_path": "SPEC.md",
+                                    "sha256": hashlib.sha256(b"draft v001\n").hexdigest()}]
+                self.check(e, False)
+
+    def test_exact_pin_accepts_markdown_boundaries(self):
+        pin = f"{self.base}:SPEC.md"
+        for content in (pin, f"Approved base: {pin}\n", f"Base: `{pin}`.",
+                        f"[Approved base]({pin})", f'Base: "{pin}"',
+                        f"<{pin}>", f"Base: {pin}; US-001 approved.",
+                        f"Base: {pin}.\n"):
+            with self.subTest(content=content):
+                self.write("PLAN.md", content)
+                approval = self.commit(["PLAN.md"])
+                e = self.expected()
+                e["references"] = [{"consumer_commit": approval, "consumer_path": "PLAN.md",
+                                    "source_commit": self.base, "source_path": "SPEC.md",
+                                    "sha256": hashlib.sha256(b"draft v001\n").hexdigest()}]
+                self.check(e)
+
     def test_wrong_approved_dependency_is_detected(self):
         self.write("SPEC.md", "proposal v002\n")
         new = self.commit(["SPEC.md"])
