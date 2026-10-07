@@ -307,7 +307,7 @@ if [[ -f "$REPO_ROOT/skills/writing-constitution/agents/openai.yaml" ]]; then
   git -C "$fallback_repo" -c user.name='Package Test' -c user.email='package-test@example.invalid' \
     -c core.hooksPath=/dev/null commit -q -m 'Freeze packaging regression fixture'
   cp -R "$metadata_source" "$fallback_metadata"
-  rm -rf "$fallback_metadata/skills/writing-constitution" "$fallback_metadata/skills/writing-design"
+  rm -rf "$fallback_metadata/skills/writing-constitution" "$fallback_metadata/skills/writing-design" "$fallback_metadata/skills/writing-roadmap"
 
   # A dirty edit must not replace the fallback from the selected Git ref.
   printf '\n# uncommitted fixture metadata\n' >> \
@@ -321,13 +321,17 @@ if [[ -f "$REPO_ROOT/skills/writing-constitution/agents/openai.yaml" ]]; then
     assert_contains "$fallback_paths" "templates/CONSTITUTION.md" "fallback archive includes constitution template"
     assert_contains "$fallback_paths" "templates/README.md" "fallback archive includes template guide"
     assert_contains "$fallback_paths" "skills/writing-design/SKILL.md" "fallback archive includes technical documentation skill"
-    for template in ARCHITECTURE STRUCTURE INFRASTRUCTURE; do
+    for template in ARCHITECTURE STRUCTURE INFRASTRUCTURE ROADMAP RELEASE; do
       template_path="templates/$template.md"
       assert_contains "$fallback_paths" "$template_path" "fallback archive includes $template template"
       assert_equals "$(read_archive_file "$fallback_archive" "$template_path")" \
         "$(git -C "$fallback_repo" show "HEAD:$template_path")" \
         "fallback archive preserves $template template bytes"
     done
+    assert_contains "$fallback_paths" "skills/writing-roadmap/SKILL.md" "fallback archive includes roadmap skill"
+    assert_equals "$(read_archive_file "$fallback_archive" skills/writing-roadmap/agents/openai.yaml)" \
+      "$(git -C "$fallback_repo" show HEAD:skills/writing-roadmap/agents/openai.yaml)" \
+      "roadmap skill uses bundled fallback metadata"
     if [[ -f "$fallback_repo/skills/writing-design/agents/openai.yaml" ]]; then
       assert_equals "$(read_archive_file "$fallback_archive" skills/writing-design/agents/openai.yaml)" \
         "$(git -C "$fallback_repo" show HEAD:skills/writing-design/agents/openai.yaml)" \
@@ -356,7 +360,10 @@ if [[ -f "$REPO_ROOT/skills/writing-constitution/agents/openai.yaml" ]]; then
       else
         fail "tar.gz technical documentation skill has bundled metadata"
       fi
-      for template in ARCHITECTURE STRUCTURE INFRASTRUCTURE; do
+      assert_equals "$(read_archive_file "$fallback_tar_archive" skills/writing-roadmap/agents/openai.yaml)" \
+        "$(git -C "$fallback_repo" show HEAD:skills/writing-roadmap/agents/openai.yaml)" \
+        "tar.gz preserves roadmap skill metadata"
+      for template in ARCHITECTURE STRUCTURE INFRASTRUCTURE ROADMAP RELEASE; do
         template_path="templates/$template.md"
         assert_equals "$(read_archive_file "$fallback_tar_archive" "$template_path")" \
           "$(git -C "$fallback_repo" show "HEAD:$template_path")" \

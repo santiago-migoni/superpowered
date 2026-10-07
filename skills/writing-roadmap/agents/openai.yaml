@@ -1,0 +1,4 @@
+interface:
+  display_name: "Writing Roadmap"
+  short_description: "Maintain roadmap priorities and product release records"
+  default_prompt: "Use $writing-roadmap to create, review or update the roadmap and relevant releases, separating approval, delivery and validated outcomes."

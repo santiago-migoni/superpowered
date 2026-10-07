@@ -7,11 +7,14 @@ are stored in `docs/superpowers/` and tracked in Git:
 - [ARCHITECTURE.md](ARCHITECTURE.md): system responsibilities, relationships and technical decisions.
 - [STRUCTURE.md](STRUCTURE.md): repository and code organization.
 - [INFRASTRUCTURE.md](INFRASTRUCTURE.md): execution resources, environments and operation.
+- [ROADMAP.md](ROADMAP.md): release priority, sequence and relationships.
+- [RELEASE.md](RELEASE.md): outcome, scope, dependencies and evidence for one product release.
 
 These are templates for adopting projects, not descriptions of the fork itself.
 Use `writing-constitution` for constitutions and
 [writing-design](../skills/writing-design/SKILL.md) for the technical documents.
-Roadmap management and plugin language configuration are subsequent steps.
+Use [writing-roadmap](../skills/writing-roadmap/SKILL.md) for the roadmap index
+and release records. Plugin language configuration is separate work.
 
 ## Create or Review a Constitution
 
@@ -174,3 +177,30 @@ infrastructure changes. Existing documents and runbooks remain canonical unless
 a migration is agreed; reference them rather than maintain competing copies.
 Document creation is proportional to the project and requested work. These
 templates do not make every document a prerequisite for every task.
+
+## Create or Maintain a Roadmap
+
+Use an index at `docs/superpowers/ROADMAP.md` and one canonical record per product
+release at `docs/superpowers/releases/vX.Y.Z.md`. The index owns priority and
+sequence; a release owns its outcome, scope, exclusions, dependencies and
+success evidence. Reference specs for detailed behavior and acceptance and
+plans for execution; do not create them automatically.
+
+Alignment proceeds from constitution through relevant architecture, structure
+and infrastructure to roadmap, spec and plan. Consult applicable decisions and
+source versions; missing technical details remain explicit dependencies rather
+than forcing a complete design interview. Upstream conflicts need an identified
+review before the affected scope is adopted.
+
+Product versions such as `v0.1.0` identify deliveries; metadata `version: v001`
+identifies document revisions. Keep the existing metadata rules above. Approval
+of a release is independent of approval of index priorities or other releases.
+Represent delivery as `planned`, `in_progress` or `delivered` and outcome
+validation as `pending`, `partially_validated` or `validated` in the release
+record. These fields do not replace document approval metadata.
+
+Record actual delivery and measured results separately; tests or completion do
+not by themselves validate the user outcome. Update only affected records and
+evidence, preserving unchanged priorities and approvals. The joint versioning
+policy review remains separate work; this addition does not require identical
+revision numbers or a new snapshot layout across documents.

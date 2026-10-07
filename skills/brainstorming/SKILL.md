@@ -55,6 +55,16 @@ Keep this skill's feature scope, design and approval paths. Permanent-document
 maintenance does not restart an unchanged design or replace the writing-plans
 handoff; update affected descriptions with the authorized delivery.
 
+## Roadmap Context
+
+Consult the existing roadmap index and the relevant release when a requested
+change has an assigned release. Reference its outcome, approved scope, priority
+and applicable source versions without treating a roadmap as a feature spec.
+Creating, reprioritizing or maintaining roadmap/release records within the
+authorized task uses writing-roadmap. Reading them does not authorize edits,
+additional scope or automatic spec/plan generation; missing roadmap records do
+not block a bounded change.
+
 ## Establish Shared Understanding
 
 The outcome of brainstorming is an understanding your human partner can
