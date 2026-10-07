@@ -47,27 +47,28 @@ their own scope; they do not replace the document's status.
 |---|---|
 | `title` | Document title. |
 | `status` | A single value: `draft`, `approved`, `in_review`, or `superseded`. |
-| `version` | Content version in the format `v001`, `v002`, etc. Increment when decisions or the described system, code organization or infrastructure change; editorial corrections do not require a new version. |
+| `version` | Independent document revision: `v001`, `v002`, etc. Apply the revision rules below; this is not the product release number. |
 | `responsible` | Text identifying the person or role that approves the document. |
 | `created_at` | Creation date of the project's document; preserve it. |
 | `updated_at` | Date of the most recent edit. |
 | `reviewed_at` | Date of the most recent content review; editing does not imply reviewing. |
-| `approval_reference` | Verifiable reference identifying who approved this version, when, and where the decision was recorded. |
+| `approval_reference` | Verifiable decision record identifying the exact approved content, responsible person, date and scope. Maintenance does not enlarge that approval. |
 
 Use quoted text for dates in `YYYY-MM-DD` format. `null` indicates pending
 information; do not invent values. Set `created_at` when creating the project's
 document, rather than using the template's creation date.
 
 - **`draft`:** contains content or decisions pending review or approval.
-- **`approved`:** the responsible person or role approved this version;
-  measurements may remain pending if they are identified and explicitly accepted.
+- **`approved`:** the applicable decisions are approved with exact content and
+  scope identified; measurements may remain pending if explicitly accepted.
+  Maintenance retains only unchanged decision authority as described below.
 - **`in_review`:** changes are proposed. Identify the last approved version
   through a reachable Git revision or a durable version snapshot, and
   distinguish pending changes.
 - **`superseded`:** a canonical document replaces this one; link to it.
 
-Before setting `approved`, complete `responsible` and `approval_reference` for
-the current version. When proposing changes to approved decisions, use
+When recording approval, complete `responsible` and `approval_reference` for
+the exact presented version. When proposing changes to approved decisions, use
 `in_review` and leave `approval_reference: null` until the new version is
 approved. Preserve the previous approval in the decision history and reference
 the exact previous approved content. Use a reachable Git revision when it
@@ -81,6 +82,79 @@ The most recent review records a date; it does not guarantee that the content
 is current. If discrepancies with later decisions arise, surface them before
 using the affected content as authority. An unapproved edit does not replace
 an approved decision.
+
+## Document Revisions and Related References
+
+Apply these rules across writing-constitution, writing-design, writing-roadmap,
+writing-spec and release planning in writing-plans. Keep one current canonical
+file per document; historical bases are evidence, not parallel maintained copies.
+Each document has its own revision. A product release such as `v0.1.0`, a
+document revision such as `v003`, and the plugin version are independent.
+
+| Event | Revision and authority |
+|---|---|
+| Elaborate a working draft | Start at v001; iterate within that working revision until presenting it. Do not create snapshots for every question or save. |
+| Substantively revise presented content | Increment once for the next working revision, not for each intermediate edit. New unapproved content stays draft. Changes to approved decisions use in_review and approval_reference null; retain the previous approved authority separately. |
+| Record approval or fix editorial wording, links or current status references | Retain the revision and unchanged approval scope. Approval must identify the exact content presented; recording it is not a substantive revision. |
+| Change descriptions of implemented structure/infrastructure or add material delivery, completion or verification evidence | Increment once per scoped maintenance update, grouping its intermediate edits/checks; a later material update starts another revision. Preserve unchanged decision approvals and their original exact scope; evidence is not a new decision approval. If decisions also change, use in_review and approval_reference null for the proposed revision. |
+| Read-only review or no-op | Do not change files, revisions or dates. An explicitly authorized review record may update reviewed_at without a content revision. |
+
+Editorial means the meaning, obligations, acceptance criteria, approach and
+evidence claims stay unchanged. Rewording a criterion to require new behavior is
+substantive even when called a typo. A reference change to a different behavioral
+base requires impact review; it is not automatically editorial. Keep created_at;
+update updated_at on edits and reviewed_at only for an actual authorized review.
+
+Partial approval records only the accepted scope; the whole document remains
+draft or in_review until its remaining decisions are approved or explicitly
+accepted as open. Unaffected approved decisions remain available from their
+identified base. Keep approval_reference null for whole-document approval while
+it is draft or in_review; record partial approvals in the scoped decision history.
+Evidence-only maintenance may retain approved when no approved
+decision changes: state which decision approval remains applicable and which
+evidence is new, rather than claiming that the original approver approved the
+new complete revision. Approval, execution authorization, delivery and validated
+outcomes remain separate.
+
+When later evidence contradicts an earlier result, retain the earlier record
+as historical and revise the current claim/status to what the available evidence
+supports. A failed check does not automatically erase a delivered increment or
+reopen an unchanged decision; it can invalidate the claimed outcome or verification.
+
+Preserve exact presented content when recording approval and exact approved
+content before modifying it. Prefer a reachable Git revision containing those
+bytes, including metadata; reuse an existing identical durable snapshot when
+available. Otherwise preserve only the needed base outside .superpowers/ and
+link it from the canonical record. Do not use HEAD for uncommitted content,
+overwrite historical evidence, force a snapshot directory layout, or duplicate
+an already reproducible base. Record substantive changes, approval and evidence
+scope in the existing decision/change history; a bounded editorial correction
+needs only a concise trace when it affects authority or reproducibility.
+
+On creation, authorized modification or approval, inspect relevant references
+along Constitution → Architecture/Structure/Infrastructure → Roadmap/release →
+Spec → Plan, including current references back to an approved dependent document.
+Use canonical links and stable IDs; inspect affected neighbors, not every file.
+Reconcile stale existence, status and source references when the authorized work
+includes their maintenance. Narrow file limits and read-only requests take
+precedence: report the exact protected path/section, stale claim and needed
+correction without editing it. This check does not authorize creating missing
+documents, expanding scope or launching another workflow.
+
+Keep approval declarations and historical references literal. Do not repoint
+an approved Plan to an unapproved changed Spec or rewrite completed tasks and
+results. Identify affected future tasks and blockers before adopting a changed
+base. Reconciliation alone does not synchronize revision numbers or reopen
+unchanged approvals.
+
+An exact reference identifies an immutable approved base, distinct from a link
+to the current canonical document. Hashes are optional; when used, state their
+domain (for example complete file including metadata) and verify the bytes.
+Never refresh an approved-base hash to mutable current content. If an existing
+current-file hash becomes stale after an editorial edit, repair that current
+reference within authorization, preserving the approved-base reference; report
+it otherwise. Avoid reciprocal current-file hashes and self-referential hashes;
+use immutable bases for exact dependency references instead.
 
 Keep `PRI-`, `OBJ-`, and `EXI-` identifiers stable: add new identifiers without
 renumbering or reusing retired ones. Specifications can reference them without
@@ -205,9 +279,9 @@ record. These fields do not replace document approval metadata.
 
 Record actual delivery and measured results separately; tests or completion do
 not by themselves validate the user outcome. Update only affected records and
-evidence, preserving unchanged priorities and approvals. The joint versioning
-policy review remains separate work; this addition does not require identical
-revision numbers or a new snapshot layout across documents.
+evidence, preserving unchanged priorities and approvals. Apply the common
+revision and related-reference rules above without synchronized revision numbers
+or a mandatory snapshot layout.
 
 ## Specify and Plan a Release
 
@@ -251,5 +325,5 @@ For release work, writing-spec and writing-plans use these templates. Planning
 without an assigned release retains its existing workflow; these resources do
 not impose release documentation on bounded corrections. For execution tools
 that extract tasks, writing-plans expands checkbox tasks under `Task N` headings
-while retaining T-001 identifiers and story references. The common versioning
-policy review remains subsequent work.
+while retaining T-001 identifiers and story references. Apply the common revision
+and related-reference rules above.

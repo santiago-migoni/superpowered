@@ -1,0 +1,79 @@
+{
+  "tempdir": "/private/tmp/superpowered-reference-eval-db0c08zq",
+  "scenario1": {
+    "before": {
+      "SPEC.md": "cb7f7e70be984023451be928888fe73a1c178f726d4ca2d971acfbb74642ad6b",
+      "PLAN.md": "6d041782af7b1d6a33cc4a9e1d8a376300f6ba88a63a1e48bf18dc40d7c622c6",
+      "v0.1.0.md": "7ba544b57977f0f482c61c647e2d65cea6f53506e0d2f6abcbf6727fe216b11b",
+      "ROADMAP.md": "25bd878fbf47b815d38b59bada4798380843d55234dc7cfed7f0050d9b992575"
+    },
+    "after": {
+      "SPEC.md": "cb7f7e70be984023451be928888fe73a1c178f726d4ca2d971acfbb74642ad6b",
+      "PLAN.md": "2a622f1e687465f107449cb0fee0c2fab6426a14bb88dedf856b090f5ac50f0b",
+      "v0.1.0.md": "7ba544b57977f0f482c61c647e2d65cea6f53506e0d2f6abcbf6727fe216b11b",
+      "ROADMAP.md": "25bd878fbf47b815d38b59bada4798380843d55234dc7cfed7f0050d9b992575"
+    },
+    "pending": [
+      {
+        "path": "/private/tmp/superpowered-reference-eval-db0c08zq/docs/superpowers/specs/v0.1.0/SPEC.md",
+        "section": "Related Current References / RC-01",
+        "stale": "PLAN.md — draft, approval pending.",
+        "needed": "PLAN.md — approved v001, PLAN-A01."
+      },
+      {
+        "path": "/private/tmp/superpowered-reference-eval-db0c08zq/docs/superpowers/releases/v0.1.0.md",
+        "section": "Related Specifications / RC-02",
+        "stale": "No specification exists for this release.",
+        "needed": "Link existing approved SPEC.md v001, S-A01."
+      }
+    ]
+  },
+  "scenario2": {
+    "after": {
+      "SPEC.md": "15a36044896e8b8a64803fd6ab456ada208dfac4567f3d06328401ab93feb932",
+      "PLAN.md": "341597ce483f45e55005037129f1f87aa6ef1638b1f7f1c0cb119eaa9b81b632",
+      "v0.1.0.md": "da8f61f5906c3466bf54f99c1c26db5dda5c920608a2314608f17d302cbf0935",
+      "ROADMAP.md": "25bd878fbf47b815d38b59bada4798380843d55234dc7cfed7f0050d9b992575"
+    },
+    "immutable_bases": {
+      "PLAN-presented-v001.md": "6d041782af7b1d6a33cc4a9e1d8a376300f6ba88a63a1e48bf18dc40d7c622c6",
+      "retained-release-exact.md": "7ba544b57977f0f482c61c647e2d65cea6f53506e0d2f6abcbf6727fe216b11b",
+      "SPEC-presented-v001.md": "9359977fb5f5bb2c8a458e16b657c19f21b0bf5eacf5de09d7e0b16d564fc30d",
+      "retained-spec-exact.md": "cb7f7e70be984023451be928888fe73a1c178f726d4ca2d971acfbb74642ad6b",
+      "PLAN-approved-v001.md": "2a622f1e687465f107449cb0fee0c2fab6426a14bb88dedf856b090f5ac50f0b"
+    }
+  },
+  "checks": {
+    "only_plan_changed_in_scenario1": true,
+    "scenario1_protected_spec_release_unchanged": true,
+    "scenario1_exact_pending_references": true,
+    "scenario1_tasks_unchanged": true,
+    "scenario2_only_three_authorized_canonicals_changed": true,
+    "all_immutable_snapshots_byte_identical": true,
+    "immutable_SPEC_base_hash_unchanged": true,
+    "current_SPEC_hash_refreshed_once": true,
+    "approval_history_literal_preserved": true,
+    "task_and_verification_bytes_unchanged": true,
+    "versions_and_approval_ids_preserved": true,
+    "roadmap_unchanged": true,
+    "no_reciprocal_or_self_hash": true,
+    "existing_SPEC_release_snapshots_reused": true,
+    "created_and_reviewed_dates_preserved": true
+  },
+  "passed": 15,
+  "total": 15,
+  "product_execution": "none",
+  "product_tests": "none",
+  "fixture_files": {
+    "evidence/PLAN-presented-v001.md": "---\ntitle: Plan v0.1.0\nstatus: draft\nversion: v001\nresponsible: Fixture owner\ncreated_at: \"2026-10-06\"\nupdated_at: \"2026-10-06\"\nreviewed_at: \"2026-10-06\"\napproval_reference: null\n---\n\n# Plan v0.1.0\n\n## Reference and Approach\nSpecification current canonical: [SPEC.md](SPEC.md), approved v001.\nSpecification immutable presented base: [SPEC-presented-v001.md](../../../../evidence/SPEC-presented-v001.md), decision S-A01.\nSPEC-base-sha256: 9359977fb5f5bb2c8a458e16b657c19f21b0bf5eacf5de09d7e0b16d564fc30d\nSPEC-current-sha256: cb7f7e70be984023451be928888fe73a1c178f726d4ca2d971acfbb74642ad6b\nHash domain: complete file bytes including metadata.\nApproach: expose the existing saved observations read-only.\n\n## Tasks\n### Task 1: T-001 — List observations\n- [ ] T-001 — Implement read-only list. US-001.\n- [ ] Acceptance: show stored observations without changing values.\n\n## Verification\nUS-001 acceptance belongs to Task 1; results pending, not run.\n\n## Approval History\n",
+    "evidence/PLAN-approved-v001.md": "---\ntitle: Plan v0.1.0\nstatus: approved\nversion: v001\nresponsible: Fixture owner\ncreated_at: \"2026-10-06\"\nupdated_at: \"2026-10-07\"\nreviewed_at: \"2026-10-06\"\napproval_reference: PLAN-A01\n---\n\n# Plan v0.1.0\n\n## Reference and Approach\nSpecification current canonical: [SPEC.md](SPEC.md), approved v001.\nSpecification immutable presented base: [SPEC-presented-v001.md](../../../../evidence/SPEC-presented-v001.md), decision S-A01.\nSPEC-base-sha256: 9359977fb5f5bb2c8a458e16b657c19f21b0bf5eacf5de09d7e0b16d564fc30d\nSPEC-current-sha256: cb7f7e70be984023451be928888fe73a1c178f726d4ca2d971acfbb74642ad6b\nHash domain: complete file bytes including metadata.\nApproach: expose the existing saved observations read-only.\n\n## Tasks\n### Task 1: T-001 — List observations\n- [ ] T-001 — Implement read-only list. US-001.\n- [ ] Acceptance: show stored observations without changing values.\n\n## Verification\nUS-001 acceptance belongs to Task 1; results pending, not run.\n\n## Approval History\nPLAN-A01: Fixture owner approved the exact presented plan v001 on 2026-10-07, approach and tasks only. No execution was authorized.\nPresented exact content: [PLAN-presented-v001.md](../../../../evidence/PLAN-presented-v001.md).\n",
+    "evidence/retained-release-exact.md": "---\ntitle: Release v0.1.0\nstatus: approved\nversion: v001\nresponsible: Fixture owner\ncreated_at: \"2026-10-06\"\nupdated_at: \"2026-10-06\"\nreviewed_at: \"2026-10-06\"\napproval_reference: R-A01\n---\n\n# Release v0.1.0\n\n## Scope and Exclusions\nRead-only observation list; editing observations excluded.\n\n## Related Specifications\nRC-02: No specification exists for this release.\n\n## Delivery and Outcome Evidence\nDelivery state: planned.\nOutcome validation: pending.\n\n## Decision History\nR-A01: Fixture owner approved release v001 on 2026-10-06, outcome and bounded scope only. No specification or plan approval was granted.\n",
+    "evidence/SPEC-presented-v001.md": "---\ntitle: Specification v0.1.0\nstatus: draft\nversion: v001\nresponsible: Fixture owner\ncreated_at: \"2026-10-06\"\nupdated_at: \"2026-10-06\"\nreviewed_at: \"2026-10-06\"\napproval_reference: null\n---\n\n# Specification v0.1.0\n\n## Context and Outcome\nRelease: [v0.1.0](../../releases/v0.1.0.md).\n\n## User Stories\n### US-001 — List saved inventory observations\nAcceptance: show saved observations without changing stored values.\n\n## Shared Constraints\nRead-only observation list.\n\n## Related Current References\nRC-01: [PLAN.md](PLAN.md) — draft, approval pending.\n\n## Decision History\nS-A01: Fixture owner approved the exact presented specification v001 on 2026-10-06, stories and shared constraints only. Plan approval and execution were not included.\n",
+    "evidence/retained-spec-exact.md": "---\ntitle: Specification v0.1.0\nstatus: approved\nversion: v001\nresponsible: Fixture owner\ncreated_at: \"2026-10-06\"\nupdated_at: \"2026-10-06\"\nreviewed_at: \"2026-10-06\"\napproval_reference: S-A01\n---\n\n# Specification v0.1.0\n\n## Context and Outcome\nRelease: [v0.1.0](../../releases/v0.1.0.md).\n\n## User Stories\n### US-001 — List saved inventory observations\nAcceptance: show saved observations without changing stored values.\n\n## Shared Constraints\nRead-only observation list.\n\n## Related Current References\nRC-01: [PLAN.md](PLAN.md) — draft, approval pending.\n\n## Decision History\nS-A01: Fixture owner approved the exact presented specification v001 on 2026-10-06, stories and shared constraints only. Plan approval and execution were not included.\n",
+    "docs/superpowers/ROADMAP.md": "---\ntitle: Roadmap\nstatus: approved\nversion: v001\nresponsible: Fixture owner\ncreated_at: \"2026-10-06\"\nupdated_at: \"2026-10-06\"\nreviewed_at: \"2026-10-06\"\napproval_reference: RM-A01\n---\n\n# Roadmap\n\nv0.1.0 has first priority; [release](releases/v0.1.0.md).\n",
+    "docs/superpowers/releases/v0.1.0.md": "---\ntitle: Release v0.1.0\nstatus: approved\nversion: v001\nresponsible: Fixture owner\ncreated_at: \"2026-10-06\"\nupdated_at: \"2026-10-07\"\nreviewed_at: \"2026-10-06\"\napproval_reference: R-A01\n---\n\n# Release v0.1.0\n\n## Scope and Exclusions\nRead-only observation list; editing observations excluded.\n\n## Related Specifications\nRC-02: [SPEC.md](../specs/v0.1.0/SPEC.md) — approved v001, S-A01.\n\n## Delivery and Outcome Evidence\nDelivery state: planned.\nOutcome validation: pending.\n\n## Decision History\nR-A01: Fixture owner approved release v001 on 2026-10-06, outcome and bounded scope only. No specification or plan approval was granted.\n\nEditorial trace 2026-10-07: RC-02 links the existing spec; R-A01 retains its original scope. Exact approved base: [retained-release-exact.md](../../../evidence/retained-release-exact.md).\n",
+    "docs/superpowers/specs/v0.1.0/PLAN.md": "---\ntitle: Plan v0.1.0\nstatus: approved\nversion: v001\nresponsible: Fixture owner\ncreated_at: \"2026-10-06\"\nupdated_at: \"2026-10-07\"\nreviewed_at: \"2026-10-06\"\napproval_reference: PLAN-A01\n---\n\n# Plan v0.1.0\n\n## Reference and Approach\nSpecification current canonical: [SPEC.md](SPEC.md), approved v001.\nSpecification immutable presented base: [SPEC-presented-v001.md](../../../../evidence/SPEC-presented-v001.md), decision S-A01.\nSPEC-base-sha256: 9359977fb5f5bb2c8a458e16b657c19f21b0bf5eacf5de09d7e0b16d564fc30d\nSPEC-current-sha256: 15a36044896e8b8a64803fd6ab456ada208dfac4567f3d06328401ab93feb932\nHash domain: complete file bytes including metadata.\nApproach: expose the existing saved observations read-only.\n\n## Tasks\n### Task 1: T-001 — List observations\n- [ ] T-001 — Implement read-only list. US-001.\n- [ ] Acceptance: show stored observations without changing values.\n\n## Verification\nUS-001 acceptance belongs to Task 1; results pending, not run.\n\n## Approval History\nPLAN-A01: Fixture owner approved the exact presented plan v001 on 2026-10-07, approach and tasks only. No execution was authorized.\nPresented exact content: [PLAN-presented-v001.md](../../../../evidence/PLAN-presented-v001.md).\n\nEditorial trace 2026-10-07: refreshed the canonical SPEC current-file hash once; immutable presented base and PLAN-A01 scope remain unchanged. Exact approved Plan base: [PLAN-approved-v001.md](../../../../evidence/PLAN-approved-v001.md).\n",
+    "docs/superpowers/specs/v0.1.0/SPEC.md": "---\ntitle: Specification v0.1.0\nstatus: approved\nversion: v001\nresponsible: Fixture owner\ncreated_at: \"2026-10-06\"\nupdated_at: \"2026-10-07\"\nreviewed_at: \"2026-10-06\"\napproval_reference: S-A01\n---\n\n# Specification v0.1.0\n\n## Context and Outcome\nRelease: [v0.1.0](../../releases/v0.1.0.md).\n\n## User Stories\n### US-001 — List saved inventory observations\nAcceptance: show saved observations without changing stored values.\n\n## Shared Constraints\nRead-only observation list.\n\n## Related Current References\nRC-01: [PLAN.md](PLAN.md) — approved v001, PLAN-A01.\n\n## Decision History\nS-A01: Fixture owner approved the exact presented specification v001 on 2026-10-06, stories and shared constraints only. Plan approval and execution were not included.\n\nEditorial trace 2026-10-07: RC-01 reflects PLAN-A01; S-A01 retains its original scope. Exact approved base: [retained-spec-exact.md](../../../../evidence/retained-spec-exact.md).\n"
+  },
+  "method": "Isolated artifact exercise using updated rules; not native Codex activation proof."
+}

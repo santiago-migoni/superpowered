@@ -65,8 +65,11 @@ choices within the authorized scope do not require another approval round.
 Read-only review leaves files and metadata unchanged.
 
 Apply shared metadata, baseline preservation and approval-reference rules. Record
-the exact plan revision and approval scope; the joint versioning review remains
-separate. Preserve completed work and evidence when authorized updates change
+the exact plan revision and approval scope. Apply the guide's independent
+revision and related-reference rules on creation, change or approval; reconcile
+authorized current references and report protected stale sections. Do not
+silently adopt an unapproved changed spec or refresh its approved-base hash.
+Preserve completed work and evidence when authorized updates change
 only future tasks. Review affected tasks when the referenced spec changes.
 
 Return path, spec revision, coverage, status and blockers. Plan approval accepts

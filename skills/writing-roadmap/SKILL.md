@@ -67,9 +67,10 @@ for the requested work, without generating specs, plans or application scaffoldi
 ## Decisions, Approval and Maintenance
 
 Follow [shared metadata and maintenance rules](../../templates/README.md), the
-requested document language, and existing version conventions. The joint
-versioning-policy review is separate work; do not add mandatory snapshot trees
-or force synchronized revision numbers across unrelated documents.
+requested document language, independent revisions and exact-base rules. On
+creation, change or approval, check related references and reconcile authorized
+current links/statuses; report protected stale sections. Do not add mandatory
+snapshot trees or synchronize unrelated document revisions.
 
 - **Review only:** return findings and gaps without editing content or metadata.
 - **Propose priorities or scope:** show the affected changes, rationale,
@@ -84,7 +85,9 @@ or force synchronized revision numbers across unrelated documents.
 - **Record delivery:** update only affected progress and evidence under the
   existing authorization. Do not reorder releases, enlarge scope or reopen
   unchanged decisions merely because an increment was delivered. Apply the
-  guide's content-version rules without changing unrelated records for symmetry.
+  guide's evidence revision rules, preserving the exact scope of unchanged
+  approvals without claiming approval of new evidence. Do not change unrelated
+  records for symmetry.
 
 Represent delivery separately as `planned`, `in_progress` or `delivered`, and
 outcome evidence as `pending`, `partially_validated` or `validated`. A draft

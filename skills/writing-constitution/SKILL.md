@@ -66,11 +66,16 @@ or business priority.
 ## Approval and Handoff
 
 Use `draft` for new unapproved content, `in_review` for proposed changes to
-approved decisions, and `approved` only for the version explicitly approved.
+approved decisions. Record `approved` only for the exact presented content and
+scope explicitly approved; evidence-only maintenance can retain unchanged
+decision authority under the shared rules without claiming new approval.
 Partial approval leaves the whole document pending. Pending measurements may
 remain in an approved version if explicitly accepted; unresolved product
 decisions do not become approved by association. Follow the template guide for
-versions, dates, and approval references. Reviewing without edits can update
+independent revisions, exact bases, dates, and approval references. On creation,
+change or approval, apply its related-reference check; reconcile authorized
+current references and report protected stale sections without editing them.
+Reviewing without edits can update
 `reviewed_at` only when recording the review is authorized.
 
 For new features, wait for applicable approved direction before feature design.

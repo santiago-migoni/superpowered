@@ -68,6 +68,9 @@ continue to guide the authorized task.
 ## Create, Review or Update
 
 Follow [the shared metadata and maintenance rules](../../templates/README.md).
+Apply its independent revision, exact-base and related-reference rules when
+creating, changing or approving a document. Reconcile authorized current
+references; report protected stale sections without editing them.
 Use the requested document language; keep metadata keys and conventional states
 unchanged. Plugin language configuration is separate work.
 
@@ -91,7 +94,9 @@ An approved document can retain explicitly accepted pending verification.
 
 Descriptive updates resulting from approved implementation can accompany that
 delivery without reopening unchanged decisions or demanding approval of the
-whole document. Follow the guide's version and approval rules, preserve the
+whole document. Increment the descriptive/evidence revision under the shared
+rules, retaining only the unchanged decision approval and its exact scope;
+do not claim approval of the new evidence. Preserve the
 authorization and evidence, and seek a decision only for new or changed choices.
 Editing alone does not imply review; recording `reviewed_at` requires an actual
 review and authorization to record it.
