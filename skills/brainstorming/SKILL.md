@@ -67,6 +67,13 @@ not block a bounded change.
 
 ## Establish Shared Understanding
 
+For authorized specification work tied to an identified product release, use
+writing-spec to create or maintain its canonical SPEC.md with user stories and
+acceptance criteria. Keep the design and review gates below; writing-spec handles
+the release document format and authority, not a new interview or another design
+approval. Use its release location instead of the dated design-document path.
+Without an assigned release, retain the existing paths and document location.
+
 The outcome of brainstorming is an understanding your human partner can
 recognize and correct, grounded in what they want to accomplish.
 
@@ -256,7 +263,7 @@ is the whole process.
 
 - Check out the current project state first (files, docs, recent commits)
 - Before asking detailed questions, assess scope: if the request describes multiple independent subsystems (e.g., "build a platform with chat, file storage, billing, and analytics"), flag this immediately. Don't spend questions refining details of a project that needs to be decomposed first.
-- If the project is too large for a single spec, help the user decompose into sub-projects: what are the independent pieces, how do they relate, what order should they be built? Then brainstorm the first sub-project through the normal design flow. Each sub-project gets its own spec → plan → implementation cycle.
+- If the project is too large for a single spec, help the user decompose into sub-projects: what are the independent pieces, how do they relate, what order should they be built? Then brainstorm the first sub-project through the normal design flow. Each sub-project gets its own spec → plan → implementation cycle. For an identified release, keep its stories within one SPEC.md and tasks within one PLAN.md; propose a release-scope split through writing-roadmap if the release itself needs to change, rather than silently creating multiple specs for it.
 - For appropriately-scoped projects, ask questions one at a time to refine the idea
 - Prefer multiple choice questions when possible, but open-ended is fine too
 - Only one question per message - if a topic needs more exploration, break it into multiple questions

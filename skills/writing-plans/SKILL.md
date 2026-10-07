@@ -1,9 +1,23 @@
 ---
 name: writing-plans
-description: Use when you have a spec or requirements for a multi-step task, before touching code
+description: Use when creating, reviewing or updating an implementation plan from a specification or requirements, including tasks and verification for a product release, before touching code.
 ---
 
 # Writing Plans
+
+## Release Planning Route
+
+When planning an identified product release with its canonical SPEC.md, use
+[release-plans.md](references/release-plans.md). It uses the PLAN template beside
+that spec, stories-to-tasks traceability and proportional verification. Follow
+that route instead of the dated location, header and handoff below. Requests to
+review or update an existing release plan use the same route. A generic task or
+design without an assigned release retains the existing workflow below; do not
+invent a release or require roadmap documents merely to plan it.
+
+When a release specification needs creation or authorized revision, use
+writing-spec for that portion; a planning request does not authorize silently
+changing its behavior or scope.
 
 ## Overview
 

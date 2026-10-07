@@ -307,7 +307,7 @@ if [[ -f "$REPO_ROOT/skills/writing-constitution/agents/openai.yaml" ]]; then
   git -C "$fallback_repo" -c user.name='Package Test' -c user.email='package-test@example.invalid' \
     -c core.hooksPath=/dev/null commit -q -m 'Freeze packaging regression fixture'
   cp -R "$metadata_source" "$fallback_metadata"
-  rm -rf "$fallback_metadata/skills/writing-constitution" "$fallback_metadata/skills/writing-design" "$fallback_metadata/skills/writing-roadmap"
+  rm -rf "$fallback_metadata/skills/writing-constitution" "$fallback_metadata/skills/writing-design" "$fallback_metadata/skills/writing-roadmap" "$fallback_metadata/skills/writing-spec" "$fallback_metadata/skills/writing-plans"
 
   # A dirty edit must not replace the fallback from the selected Git ref.
   printf '\n# uncommitted fixture metadata\n' >> \
@@ -321,7 +321,7 @@ if [[ -f "$REPO_ROOT/skills/writing-constitution/agents/openai.yaml" ]]; then
     assert_contains "$fallback_paths" "templates/CONSTITUTION.md" "fallback archive includes constitution template"
     assert_contains "$fallback_paths" "templates/README.md" "fallback archive includes template guide"
     assert_contains "$fallback_paths" "skills/writing-design/SKILL.md" "fallback archive includes technical documentation skill"
-    for template in ARCHITECTURE STRUCTURE INFRASTRUCTURE ROADMAP RELEASE; do
+    for template in ARCHITECTURE STRUCTURE INFRASTRUCTURE ROADMAP RELEASE SPEC PLAN; do
       template_path="templates/$template.md"
       assert_contains "$fallback_paths" "$template_path" "fallback archive includes $template template"
       assert_equals "$(read_archive_file "$fallback_archive" "$template_path")" \
@@ -329,6 +329,18 @@ if [[ -f "$REPO_ROOT/skills/writing-constitution/agents/openai.yaml" ]]; then
         "fallback archive preserves $template template bytes"
     done
     assert_contains "$fallback_paths" "skills/writing-roadmap/SKILL.md" "fallback archive includes roadmap skill"
+    for skill in writing-spec writing-plans; do
+      for resource in SKILL.md agents/openai.yaml; do
+        resource_path="skills/$skill/$resource"
+        assert_contains "$fallback_paths" "$resource_path" "fallback archive includes $skill $resource"
+        assert_equals "$(read_archive_file "$fallback_archive" "$resource_path")" \
+          "$(git -C "$fallback_repo" show "HEAD:$resource_path")" \
+          "fallback archive preserves $skill $resource bytes"
+      done
+    done
+    assert_equals "$(read_archive_file "$fallback_archive" skills/writing-plans/references/release-plans.md)" \
+      "$(git -C "$fallback_repo" show HEAD:skills/writing-plans/references/release-plans.md)" \
+      "fallback archive preserves release planning guide"
     assert_equals "$(read_archive_file "$fallback_archive" skills/writing-roadmap/agents/openai.yaml)" \
       "$(git -C "$fallback_repo" show HEAD:skills/writing-roadmap/agents/openai.yaml)" \
       "roadmap skill uses bundled fallback metadata"
@@ -363,7 +375,12 @@ if [[ -f "$REPO_ROOT/skills/writing-constitution/agents/openai.yaml" ]]; then
       assert_equals "$(read_archive_file "$fallback_tar_archive" skills/writing-roadmap/agents/openai.yaml)" \
         "$(git -C "$fallback_repo" show HEAD:skills/writing-roadmap/agents/openai.yaml)" \
         "tar.gz preserves roadmap skill metadata"
-      for template in ARCHITECTURE STRUCTURE INFRASTRUCTURE ROADMAP RELEASE; do
+      for resource_path in skills/writing-spec/SKILL.md skills/writing-spec/agents/openai.yaml skills/writing-plans/SKILL.md skills/writing-plans/agents/openai.yaml skills/writing-plans/references/release-plans.md; do
+        assert_equals "$(read_archive_file "$fallback_tar_archive" "$resource_path")" \
+          "$(git -C "$fallback_repo" show "HEAD:$resource_path")" \
+          "tar.gz preserves $resource_path bytes"
+      done
+      for template in ARCHITECTURE STRUCTURE INFRASTRUCTURE ROADMAP RELEASE SPEC PLAN; do
         template_path="templates/$template.md"
         assert_equals "$(read_archive_file "$fallback_tar_archive" "$template_path")" \
           "$(git -C "$fallback_repo" show "HEAD:$template_path")" \

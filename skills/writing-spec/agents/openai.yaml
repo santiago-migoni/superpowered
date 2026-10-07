@@ -1,0 +1,4 @@
+interface:
+  display_name: "Writing Spec"
+  short_description: "Define release stories and acceptance criteria"
+  default_prompt: "Use $writing-spec to create, review or update the release specification with user stories, acceptance criteria and explicit pending decisions."

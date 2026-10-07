@@ -1,0 +1,4 @@
+interface:
+  display_name: "Writing Plans"
+  short_description: "Plan implementation tasks and release verification"
+  default_prompt: "Use $writing-plans to create, review or update an implementation plan from the applicable specification, with tasks, dependencies and verification."

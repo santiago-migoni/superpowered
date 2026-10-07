@@ -332,6 +332,14 @@ constitution and technical decisions, separates approval, delivery and outcome
 validation, and updates only affected records. Release approval does not approve
 other releases or index ordering, and does not generate specs or plans.
 
+The [SPEC and PLAN templates](templates/README.md#specify-and-plan-a-release)
+provide one specification and one plan per release at
+`docs/superpowers/specs/vX.Y.Z/`. User stories and acceptance criteria live in
+`SPEC.md`; implementation tasks and verification live in `PLAN.md`. These
+resources are used by **writing-spec** for release specifications and the release
+route of **writing-plans**. Work without an assigned release retains its existing
+design and planning paths.
+
 1. **brainstorming** - Activates before writing code. Refines rough ideas through questions, explores alternatives, presents design in sections for validation. Saves design document.
 
 2. **using-git-worktrees** - Activates after design approval. Creates isolated workspace on new branch, runs project setup, verifies clean test baseline.
@@ -379,7 +387,8 @@ Superpowers is built by [Jesse Vincent](https://blog.fsck.com) and the rest of t
 - **writing-design** - Architecture, code structure and infrastructure documentation with source and decision references
 - **writing-roadmap** - Roadmap index, release scope, priorities, delivery progress and outcome evidence
 - **brainstorming** - Socratic design refinement
-- **writing-plans** - Detailed implementation plans
+- **writing-spec** - Release user stories, acceptance criteria and shared constraints
+- **writing-plans** - Implementation tasks and verification, including one plan per release
 - **executing-plans** - Inline plan execution: one context, one final review
 - **dispatching-parallel-agents** - Concurrent subagent workflows
 - **requesting-code-review** - Pre-review checklist

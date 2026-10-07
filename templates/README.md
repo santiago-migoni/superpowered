@@ -9,12 +9,16 @@ are stored in `docs/superpowers/` and tracked in Git:
 - [INFRASTRUCTURE.md](INFRASTRUCTURE.md): execution resources, environments and operation.
 - [ROADMAP.md](ROADMAP.md): release priority, sequence and relationships.
 - [RELEASE.md](RELEASE.md): outcome, scope, dependencies and evidence for one product release.
+- [SPEC.md](SPEC.md): user stories, acceptance criteria and shared constraints for one release.
+- [PLAN.md](PLAN.md): implementation tasks and verification for that release's specification.
 
 These are templates for adopting projects, not descriptions of the fork itself.
 Use `writing-constitution` for constitutions and
 [writing-design](../skills/writing-design/SKILL.md) for the technical documents.
 Use [writing-roadmap](../skills/writing-roadmap/SKILL.md) for the roadmap index
-and release records. Plugin language configuration is separate work.
+and release records. Use [writing-spec](../skills/writing-spec/SKILL.md) for
+release specifications and [writing-plans](../skills/writing-plans/SKILL.md) for
+their implementation plans. Plugin language configuration is separate work.
 
 ## Create or Review a Constitution
 
@@ -204,3 +208,48 @@ not by themselves validate the user outcome. Update only affected records and
 evidence, preserving unchanged priorities and approvals. The joint versioning
 policy review remains separate work; this addition does not require identical
 revision numbers or a new snapshot layout across documents.
+
+## Specify and Plan a Release
+
+Use one specification and one plan per release:
+
+```text
+docs/superpowers/
+├── releases/v0.1.0.md
+└── specs/v0.1.0/
+    ├── SPEC.md
+    └── PLAN.md
+```
+
+The release owns its outcome, boundaries, dependencies and delivery evidence.
+SPEC.md details expected behavior with user stories and acceptance criteria;
+PLAN.md organizes implementation tasks and checks against that spec. Reference
+upstream content rather than copying it. Release approval does not automatically
+approve its spec or plan; neither template requires creating other documents
+outside the authorized work.
+
+Keep stories in the spec and checkbox tasks in the plan, without separate files
+per story or task. Use stable US-001 and T-001 identifiers for simple traceability.
+A task can serve several stories and a story can require several tasks. Put
+shared technical constraints in the spec rather than inventing user stories for
+them. Omit empty open-item and blocker sections; use only relevant detail.
+
+Identify the applicable release and exact spec revision. Apply the existing
+metadata and approval preservation rules; product release numbers and document
+revisions remain distinct. A change to scope or behavior belongs in the spec
+and, when needed, the upstream release or technical decision before it becomes
+an authorized task. Routine implementation choices within authorized scope do
+not require separate approval rounds.
+
+Spec approval accepts the defined change; plan approval accepts the approach.
+Execution requires authorization, which can accompany approval in one message.
+Record task completion and actual acceptance-check results separately. Passing
+these checks does not automatically validate the release's overall outcome;
+record applicable delivery and outcome evidence in its canonical release.
+
+For release work, writing-spec and writing-plans use these templates. Planning
+without an assigned release retains its existing workflow; these resources do
+not impose release documentation on bounded corrections. For execution tools
+that extract tasks, writing-plans expands checkbox tasks under `Task N` headings
+while retaining T-001 identifiers and story references. The common versioning
+policy review remains subsequent work.

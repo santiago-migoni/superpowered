@@ -12,7 +12,8 @@ La revisión de versionado se realizará como una decisión común del flujo, de
 ## Avance de implementación
 
 - `writing-roadmap` y las plantillas de índice ROADMAP y registro RELEASE están implementadas en el código fuente. Las comprobaciones locales y las tres sesiones guiadas de comportamiento pasaron; la instalación y selección automática en Codex App siguen pendientes. Véase [validación](superpowers/specs/2026-10-07-writing-roadmap-validation.md).
-- Las plantillas de spec y plan siguen pendientes.
+- Las plantillas SPEC y PLAN están implementadas en inglés: una de cada una por release en `docs/superpowers/specs/vX.Y.Z/`, con user stories y criterios de aceptación en SPEC y tareas/verificación en PLAN. `writing-spec` y la ruta de releases de `writing-plans` están integradas en el código fuente; el flujo sin release conserva su ruta existente. La actualización y validación nativa del plugin siguen pendientes.
+  Véase [validación local de spec y plan](superpowers/specs/2026-10-07-spec-plan-validation.md).
 
 ## Evidencia y pendientes de la validación actual
 
