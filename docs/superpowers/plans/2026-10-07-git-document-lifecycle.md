@@ -8,7 +8,7 @@
 
 **Tech Stack:** Markdown skills/templates, Git, existing Bash/Python test tooling; no new runtime dependencies.
 
-**Spec:** The agreed policy in this conversation, summarized below; existing source baseline is commit `78e46bcc07457aba47b6dadecb1cad91a46b333d` (Codex 6.8.0). This plan proposes implementation; it does not record approval of its tasks.
+**Spec:** The agreed policy in this conversation, summarized below; existing source baseline is commit `78e46bcc07457aba47b6dadecb1cad91a46b333d` (Codex 6.8.0). Approval of the presented plan is recorded below.
 
 ## Agreed scope and constraints
 
@@ -128,3 +128,12 @@ run the baseline/pressure scenarios required by writing-skills. The execution
 method and approval of this plan remain for the human partner; no skill behavior,
 test implementation, plugin release or sandbox migration is performed by creating
 this planning document.
+
+## Approval — 2026-10-07
+
+The human partner approved the plan with the exact statement: «Aprobado el plan.»
+The presented content is commit `9ab032ccc5a7ff45c06950277153bc5c0c073dd7`, path
+`docs/superpowers/plans/2026-10-07-git-document-lifecycle.md`. Implementation proceeds
+inline with independent behavior evaluators as described in the plan. T-006 keeps
+publication and installed native validation conditional on their stated authorization
+and host update; no release or push is implied by this approval record.
