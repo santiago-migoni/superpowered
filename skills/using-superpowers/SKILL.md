@@ -23,6 +23,11 @@ This is not negotiable. You cannot rationalize your way out of this.
 
 Then announce "Using [skill] to [purpose]" and follow the skill exactly. If it has a checklist, create a todo per item.
 
+For work that creates or changes persistent deliverables, follow
+[the shared Git workflow](references/git-workflow.md) before writing and at
+presentation, approval and completion milestones. Read-only answers and
+conversational designs do not initialize or commit repositories.
+
 ## Skill Priority
 
 When multiple skills apply, process skills come first — they set the approach, then implementation skills (frontend-design, etc.) carry it out. Brainstorming and systematic-debugging are Superpowers' most common process skills, but the rule holds for any of them.

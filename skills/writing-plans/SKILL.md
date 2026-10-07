@@ -19,6 +19,12 @@ When a release specification needs creation or authorized revision, use
 writing-spec for that portion; a planning request does not authorize silently
 changing its behavior or scope.
 
+For persistent plans on either route, follow [the shared Git workflow](../using-superpowers/references/git-workflow.md).
+Identify written source documents by exact Git commit/path, commit the
+self-reviewed presentation and record later approval against that base. A
+conversational bounded design does not require an extra file. Git blockers leave
+the milestone pending; they do not authorize snapshot fallback or execution.
+
 ## Overview
 
 Write implementation plans for an engineer who has not seen this codebase or this spec. Assume they write idiomatic code in the project's language once they know the exact interface and the exact test, and that they will make a reasonable choice wherever the plan leaves one open. What they cannot know is what you decided: which files, which names and signatures, which values from the spec, which tests prove each task. Document those. Give them the whole plan as bite-sized tasks. DRY. YAGNI. TDD. Frequent commits.
@@ -147,7 +153,7 @@ Expected: PASS
 
 ```bash
 git add tests/path/test.py src/path/file.py
-git commit -m "feat: add specific feature"
+git commit --only -m "feat: add specific feature" -- tests/path/test.py src/path/file.py
 ```
 ````
 
@@ -192,7 +198,8 @@ If you find issues, fix them inline. No need to re-review — just fix and move 
 
 ## Execution Handoff
 
-After saving and self-reviewing the plan, link it for your human partner
+After saving and self-reviewing the plan, commit and verify its exact
+presentation under the shared Git workflow. Link that commit/path for your human partner
 to read. If they have already explicitly supplied an execution method, ask
 them to review the plan and confirm it captures what they want; wait for that
 review before implementation, then use the preserved method. Otherwise, ask
@@ -212,7 +219,11 @@ them to review the plan and choose an execution method before implementation.
 **"Plan complete and saved to `docs/superpowers/plans/<filename>.md`. Please review the plan. Does it capture what you want?"**
 
 **If Subagent-driven chosen:**
+- Record the approval and applicable presented commit/path in a subsequent
+  commit; verify relevant approved dependencies and execution authorization.
 - **REQUIRED SUB-SKILL:** Use superpowers:subagent-driven-development
 
 **If Native chosen:**
+- Record the approval and applicable presented commit/path in a subsequent
+  commit; verify relevant approved dependencies and execution authorization.
 - **REQUIRED SUB-SKILL:** Use superpowers:executing-plans

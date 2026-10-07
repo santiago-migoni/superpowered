@@ -55,12 +55,15 @@ decisions rather than selecting them without authorization.
 ## Approval and Continuity
 
 Apply shared metadata and baseline-preservation rules. Use the requested language;
-apply the guide's independent revision and related-reference rules on creation,
+follow [the shared Git workflow](../using-superpowers/references/git-workflow.md)
+for exact presentation, approval-recording and update commits.
+Apply the guide's independent revision and related-reference rules on creation,
 change or approval. Reconcile authorized current references, report protected
 stale sections, and keep historical approval bases immutable.
-product release numbers and document revisions differ. Preserve exact approved
-content before proposing changes, including uncommitted approvals through a
-durable snapshot when no reachable Git revision contains them. Record who
+Product release numbers and document revisions differ. Preserve exact approved
+content before proposing changes through exact Git commit/path references.
+Register approved uncommitted bytes first; report blocked Git preservation
+without a new snapshot fallback. Record who
 approved, when, the exact revision and scope; partial approval leaves the rest
 pending. Do not copy approval from the release or architecture.
 

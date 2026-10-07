@@ -80,6 +80,11 @@ default_subagent_reasoning_effort = "medium"
 
 ## Environment Detection
 
+Persistent document work also follows [the shared Git workflow](git-workflow.md)
+for project-root ownership, initial Git setup and exact content milestones.
+Read-only work does not initialize repositories; a plugin cache checkout is not
+the adopting project's repository.
+
 Skills that create worktrees or finish branches should detect their
 environment with read-only git commands before proceeding:
 
@@ -98,8 +103,9 @@ Step 1 for how each skill uses these signals.
 ## Codex App Finishing
 
 When the sandbox blocks branch/push operations (detached HEAD in an
-externally managed worktree), the agent commits all work and informs
-the user to use the App's native controls:
+externally managed worktree), the agent commits owned deliverables when permitted
+and verifies their exact bytes. If commits are also blocked, report the pending
+milestone. Inform the user to use the App's native controls:
 
 - **"Create branch"** — names the branch, then commit/push/PR via App UI
 - **"Hand off to local"** — transfers work to the user's local checkout

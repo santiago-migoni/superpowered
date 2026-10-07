@@ -134,6 +134,7 @@ EOF
 echo "Codex package archive tests"
 
 metadata_source="$TEST_ROOT/metadata-source"
+git_workflow_path="skills/using-superpowers/references/git-workflow.md"
 archive="$TEST_ROOT/superpowers"
 tar_archive="$TEST_ROOT/superpowers.tar.gz"
 extracted="$TEST_ROOT/extracted"
@@ -185,6 +186,13 @@ if git -C "$REPO_ROOT" cat-file -e HEAD:templates/CONSTITUTION.md 2>/dev/null; t
     "archive preserves committed constitution template content"
 fi
 
+if git -C "$REPO_ROOT" cat-file -e "HEAD:$git_workflow_path" 2>/dev/null; then
+  assert_contains "$archive_paths" "$git_workflow_path" "archive includes shared Git workflow"
+  assert_equals "$(read_archive_file "$archive" "$git_workflow_path" | shasum -a 256 | awk '{print $1}')" \
+    "$(git -C "$REPO_ROOT" show "HEAD:$git_workflow_path" | shasum -a 256 | awk '{print $1}')" \
+    "zip preserves selected-ref Git workflow bytes"
+fi
+
 manifest_summary="$(read_archive_file "$archive" .codex-plugin/plugin.json | python3 -c 'import json,sys; data=json.load(sys.stdin); print("\t".join([data["name"], data["version"], data["skills"], str(data.get("hooks"))]))')"
 expected_version="$(python3 -c 'import json; print(json.load(open("'"$REPO_ROOT"'/.codex-plugin/plugin.json"))["version"])')"
 assert_equals "$manifest_summary" "superpowered	$expected_version	./skills/	$source_hooks" "archive manifest preserves fork name and source hooks"
@@ -222,6 +230,11 @@ assert_contains "$tar_output" "Format:  tar.gz" "reports explicit tar.gz format"
 extract_archive "$tar_archive" "$tar_extracted"
 tar_archive_paths="$(list_archive "$tar_archive" | normalize_archive_paths)"
 assert_equals "$tar_archive_paths" "$archive_paths" "zip and tar.gz archives contain the same paths"
+if git -C "$REPO_ROOT" cat-file -e "HEAD:$git_workflow_path" 2>/dev/null; then
+  assert_equals "$(read_archive_file "$tar_archive" "$git_workflow_path" | shasum -a 256 | awk '{print $1}')" \
+    "$(git -C "$REPO_ROOT" show "HEAD:$git_workflow_path" | shasum -a 256 | awk '{print $1}')" \
+    "tar.gz preserves selected-ref Git workflow bytes"
+fi
 
 tar_task_brief_mode="$(tar -tzvf "$tar_archive" skills/subagent-driven-development/scripts/task-brief | awk '{print $1}')"
 assert_equals "$tar_task_brief_mode" "-rwxr-xr-x" "tar.gz archive preserves executable script mode"
@@ -312,6 +325,7 @@ if [[ -f "$REPO_ROOT/skills/writing-constitution/agents/openai.yaml" ]]; then
   # A dirty edit must not replace the fallback from the selected Git ref.
   printf '\n# uncommitted fixture metadata\n' >> \
     "$fallback_repo/skills/writing-constitution/agents/openai.yaml"
+  printf '\n# uncommitted fixture workflow\n' >> "$fallback_repo/$git_workflow_path"
   if fallback_output="$(bash "$fallback_repo/scripts/package-codex-plugin.sh" \
     --allow-dirty --metadata-source "$fallback_metadata" --output "$fallback_archive" 2>&1)"; then
     pass "package accepts prior metadata without the new skill"
@@ -320,6 +334,10 @@ if [[ -f "$REPO_ROOT/skills/writing-constitution/agents/openai.yaml" ]]; then
     assert_not_matches "$fallback_paths" "^skills/managing-product/" "fallback archive excludes replaced skill"
     assert_contains "$fallback_paths" "templates/CONSTITUTION.md" "fallback archive includes constitution template"
     assert_contains "$fallback_paths" "templates/README.md" "fallback archive includes template guide"
+    assert_contains "$fallback_paths" "$git_workflow_path" "fallback archive includes shared Git workflow"
+    assert_equals "$(read_archive_file "$fallback_archive" "$git_workflow_path" | shasum -a 256 | awk '{print $1}')" \
+      "$(git -C "$fallback_repo" show "HEAD:$git_workflow_path" | shasum -a 256 | awk '{print $1}')" \
+      "zip uses selected-ref Git workflow rather than dirty edits"
     assert_contains "$fallback_paths" "skills/writing-design/SKILL.md" "fallback archive includes technical documentation skill"
     for template in ARCHITECTURE STRUCTURE INFRASTRUCTURE ROADMAP RELEASE SPEC PLAN; do
       template_path="templates/$template.md"
@@ -362,6 +380,9 @@ if [[ -f "$REPO_ROOT/skills/writing-constitution/agents/openai.yaml" ]]; then
       --allow-dirty --metadata-source "$fallback_metadata" --output "$fallback_tar_archive" 2>&1)"; then
       assert_equals "$(list_archive "$fallback_tar_archive" | normalize_archive_paths)" "$fallback_paths" \
         "tar.gz fallback archive contains the same resources as zip"
+      assert_equals "$(read_archive_file "$fallback_tar_archive" "$git_workflow_path" | shasum -a 256 | awk '{print $1}')" \
+        "$(git -C "$fallback_repo" show "HEAD:$git_workflow_path" | shasum -a 256 | awk '{print $1}')" \
+        "tar.gz uses selected-ref Git workflow rather than dirty edits"
       assert_equals "$(read_archive_file "$fallback_tar_archive" skills/writing-constitution/agents/openai.yaml)" \
         "$(git -C "$fallback_repo" show HEAD:skills/writing-constitution/agents/openai.yaml)" \
         "tar.gz preserves bundled fallback metadata"

@@ -92,6 +92,20 @@ class LifecycleCheckerTests(unittest.TestCase):
         e["milestones"] = [{"commit": commit, "allowed_paths": ["SPEC.md"], "files": {}}]
         self.check(e, False)
 
+    def test_merge_cannot_hide_an_unrelated_path(self):
+        original = self.git("branch", "--show-current").decode().strip()
+        self.git("checkout", "-qb", "fixture-side")
+        self.write("user-note.md", "unrelated staged contribution\n")
+        self.commit(["user-note.md"])
+        self.git("checkout", "-q", original)
+        self.write("SPEC.md", "owned proposal\n")
+        self.commit(["SPEC.md"])
+        self.git("merge", "--no-ff", "-qm", "fixture merge", "fixture-side")
+        merged = self.git("rev-parse", "HEAD").decode().strip()
+        e = self.expected()
+        e["milestones"] = [{"commit": merged, "allowed_paths": ["SPEC.md"], "files": {}}]
+        self.check(e, False)
+
     def test_protected_index_and_working_bytes_are_checked(self):
         self.write("user-note.md", "staged\n")
         self.git("add", "user-note.md")

@@ -19,8 +19,8 @@ example rows when completing the document. -->
 ## Scope and Source References
 
 - **Repositories covered:** [Canonical repositories and inspected boundaries.]
-- **Implementation reference:** [Revision or identified snapshot for each
-  repository; record relevant local changes and uninspected areas.]
+- **Implementation reference:** [Exact Git commit and paths for each repository;
+  identify relevant uncommitted work and uninspected areas.]
 - **Architecture reference:** [Canonical architecture, source version and
   relevant components; explicitly pending if unavailable.]
 - **Current state:** [Organization observed; explicitly state if code does not
@@ -73,4 +73,4 @@ conventions that help contributors place or find relevant content. -->
 
 | Date | Version | Change and rationale | Implementation or decision reference |
 |---|---|---|---|
-| [YYYY-MM-DD] | [Version] | [Affected organization or convention] | [Commit, durable snapshot or approval evidence] |
+| [YYYY-MM-DD] | [Version] | [Affected organization or convention] | [Exact Git commit:path and applicable approval/evidence] |

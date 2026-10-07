@@ -5,6 +5,12 @@ description: Use when executing implementation plans with independent tasks in t
 
 # Subagent-Driven Development
 
+Follow [the shared Git workflow](../using-superpowers/references/git-workflow.md).
+Verify written Plan/Spec commits and applicable approval scope before affected
+execution; commits alone do not authorize it. Preserve approved pins, scoped
+owned commits and task BASE..HEAD review ranges. Durable outcomes needed after
+scratch cleanup belong in authorized versioned deliverables.
+
 Execute plan by dispatching a fresh implementer subagent per task, a task review (spec compliance + code quality) after each, and a broad whole-branch review at the end.
 
 **Why subagents:** You delegate tasks to specialized agents with isolated context. By precisely crafting their instructions and context, you ensure they stay focused and succeed at their task. They should never inherit your session's context or history — you construct exactly what they need. This also preserves your own context for coordination work.
@@ -474,12 +480,16 @@ Before you delete anything, collect every ledger line containing `Ruling:` —
 preflight rulings, parked findings, breaker adjudications, all of them — into
 your final message under "Rulings I made", in the order you made them, each
 with what it costs if wrong. The list is exhaustive: if the ledger holds a
-ruling, the list holds it. That list is the only place the decisions you
-took on your human partner's behalf reach them — they read it and rework
+ruling, the list holds it. That list brings the decisions you
+took on your human partner's behalf to their attention — they read it and rework
 whatever you got wrong. A ruling that dies with the workspace was a decision
-made in secret.
+made in secret. Before cleanup, record durable task outcomes, rulings and
+deferred findings in the Plan or existing permanent record; commit and verify
+those exact bytes under the shared Git workflow. If persistence is blocked,
+leave cleanup pending and report why.
 
-When the final whole-branch review is clean and its fixes are merged,
+When the final whole-branch review is clean, its fixes are merged and the
+durable record is recoverable from Git,
 delete this plan's workspace (`rm -rf <workspace>`) — the git history is
 the record now. Sibling directories belong to other plans; leave them
 alone.

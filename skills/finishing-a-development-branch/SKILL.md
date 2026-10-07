@@ -5,6 +5,12 @@ description: Use when implementation is complete, all tests pass, and you need t
 
 # Finishing a Development Branch
 
+Follow [the shared Git workflow](../using-superpowers/references/git-workflow.md).
+Before finishing or scratch cleanup, verify owned durable deliverables and
+their approval/evidence references are recoverable from Git. Report pending
+commits/checks without sweeping unrelated user changes into the branch. Keep
+existing merge/push/PR authorization and native worktree cleanup rules.
+
 ## Overview
 
 **Core principle:** Verify tests → Detect environment → Present options → Execute choice → Clean up.

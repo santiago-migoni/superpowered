@@ -13,6 +13,9 @@ are stored in `docs/superpowers/` and tracked in Git:
 - [PLAN.md](PLAN.md): implementation tasks and verification for that release's specification.
 
 These are templates for adopting projects, not descriptions of the fork itself.
+For persistent work, follow [the shared Git workflow](../skills/using-superpowers/references/git-workflow.md).
+Commit exact presentation, approval-recording and update milestones in the
+project's repository; a metadata revision alone is not Git history.
 Use `writing-constitution` for constitutions and
 [writing-design](../skills/writing-design/SKILL.md) for the technical documents.
 Use [writing-roadmap](../skills/writing-roadmap/SKILL.md) for the roadmap index
@@ -63,7 +66,7 @@ document, rather than using the template's creation date.
   scope identified; measurements may remain pending if explicitly accepted.
   Maintenance retains only unchanged decision authority as described below.
 - **`in_review`:** changes are proposed. Identify the last approved version
-  through a reachable Git revision or a durable version snapshot, and
+  through its exact Git commit and repository-relative path, and
   distinguish pending changes.
 - **`superseded`:** a canonical document replaces this one; link to it.
 
@@ -71,12 +74,12 @@ When recording approval, complete `responsible` and `approval_reference` for
 the exact presented version. When proposing changes to approved decisions, use
 `in_review` and leave `approval_reference: null` until the new version is
 approved. Preserve the previous approval in the decision history and reference
-the exact previous approved content. Use a reachable Git revision when it
-contains that content. If it is uncommitted, save a durable version snapshot
-including metadata and approval outside `.superpowers/` before editing, then
-link to that snapshot. Do not invent a Git revision or substitute an older one
-that omits approved changes. Editorial corrections may retain approval if they do not alter
-decisions.
+the exact previous approved content. Verify a Git commit contains those bytes,
+including metadata and the approval record. If uncommitted, register that actual
+base first under the shared Git rules before editing. If Git preservation is
+blocked, report it and leave the approved base intact; do not create a snapshot
+fallback or substitute an older HEAD. Editorial corrections may retain approval
+when decisions stay unchanged, while their prior exact base remains in Git.
 
 The most recent review records a date; it does not guarantee that the content
 is current. If discrepancies with later decisions arise, surface them before
@@ -93,7 +96,7 @@ document revision such as `v003`, and the plugin version are independent.
 
 | Event | Revision and authority |
 |---|---|
-| Elaborate a working draft | Start at v001; iterate within that working revision until presenting it. Do not create snapshots for every question or save. |
+| Elaborate a working draft | Start at v001; iterate within that working revision, then commit the reviewed presentation. Do not commit every question or save, or create a versions tree. |
 | Substantively revise presented content | Increment once for the next working revision, not for each intermediate edit. New unapproved content stays draft. Changes to approved decisions use in_review and approval_reference null; retain the previous approved authority separately. |
 | Record approval or fix editorial wording, links or current status references | Retain the revision and unchanged approval scope. Approval must identify the exact content presented; recording it is not a substantive revision. |
 | Change descriptions of implemented structure/infrastructure or add material delivery, completion or verification evidence | Increment once per scoped maintenance update, grouping its intermediate edits/checks; a later material update starts another revision. Preserve unchanged decision approvals and their original exact scope; evidence is not a new decision approval. If decisions also change, use in_review and approval_reference null for the proposed revision. |
@@ -121,13 +124,14 @@ as historical and revise the current claim/status to what the available evidence
 supports. A failed check does not automatically erase a delivered increment or
 reopen an unchanged decision; it can invalidate the claimed outcome or verification.
 
-Preserve exact presented content when recording approval and exact approved
-content before modifying it. Prefer a reachable Git revision containing those
-bytes, including metadata; reuse an existing identical durable snapshot when
-available. Otherwise preserve only the needed base outside .superpowers/ and
-link it from the canonical record. Do not use HEAD for uncommitted content,
-overwrite historical evidence, force a snapshot directory layout, or duplicate
-an already reproducible base. Record substantive changes, approval and evidence
+Preserve exact presented content as commit A before review. Record explicit
+approval and its scope in a subsequent commit B, referring to A:path rather
+than B's own hash. Reuse exact existing Git bases before changing any approved
+document, including related files edited editorially. Commits may contain
+proposals; they do not confer approval or execution authority. Keep historical
+snapshots and declarations literal, importing actual snapshot-era provenance
+into Git when needed without inventing earlier commits. New work maintains one
+canonical file and Git history. Record substantive changes, approval and evidence
 scope in the existing decision/change history; a bounded editorial correction
 needs only a concise trace when it affects authority or reproducibility.
 
@@ -147,8 +151,9 @@ results. Identify affected future tasks and blockers before adopting a changed
 base. Reconciliation alone does not synchronize revision numbers or reopen
 unchanged approvals.
 
-An exact reference identifies an immutable approved base, distinct from a link
-to the current canonical document. Hashes are optional; when used, state their
+An exact reference is a resolving Git commit plus repository-relative path to
+the approved base, distinct from a link to the current canonical document.
+Hashes are optional additional checks; when used, state their
 domain (for example complete file including metadata) and verify the bytes.
 Never refresh an approved-base hash to mutable current content. If an existing
 current-file hash becomes stale after an editorial edit, repair that current
@@ -159,7 +164,7 @@ use immutable bases for exact dependency references instead.
 Keep `PRI-`, `OBJ-`, and `EXI-` identifiers stable: add new identifiers without
 renumbering or reusing retired ones. Specifications can reference them without
 copying the entire constitution. When a decision depends on a particular version,
-include its Git revision or durable snapshot reference.
+include its exact Git commit and repository-relative path.
 
 ## Proportional Use
 
@@ -193,7 +198,7 @@ follows the language requested by your human partner.
    Reuse them or agree on migration before creating another source. Reference
    the applicable constitution and source version without copying its content.
 2. Inspect relevant code, configuration, contracts and available runtime
-   evidence. Record the revision or identified snapshot used. Describe what
+   evidence. Record the exact source Git commits and paths used. Describe what
    exists now; if there is no implementation, state that explicitly and retain
    the intended design in Architectural Decisions and Proposed Changes.
 3. Keep three facts separate: decision approval, implementation and verification.
@@ -212,7 +217,7 @@ follows the language requested by your human partner.
    without reopening unchanged decisions or demanding whole-document approval.
    A new or changed architectural decision still needs an explicit decision.
    Preserve the previous approved content and evidence before changing it, using
-   the Git revision or durable snapshot rules above.
+   the shared Git workflow above, including editorial/evidence updates.
 7. Keep priorities in the roadmap and delivery tasks in plans. Consult and update
    only relevant sections; the existence of this template does not require an
    architecture interview or a complete rewrite for every bounded correction.

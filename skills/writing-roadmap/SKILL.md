@@ -68,9 +68,12 @@ for the requested work, without generating specs, plans or application scaffoldi
 
 Follow [shared metadata and maintenance rules](../../templates/README.md), the
 requested document language, independent revisions and exact-base rules. On
+Git milestones, follow [the shared workflow](../using-superpowers/references/git-workflow.md),
+including exact prior commits of related approved releases before editorial edits.
+If Git preservation is blocked, report pending work without snapshot fallback. On
 creation, change or approval, check related references and reconcile authorized
 current links/statuses; report protected stale sections. Do not add mandatory
-snapshot trees or synchronize unrelated document revisions.
+archive trees or synchronize unrelated document revisions.
 
 - **Review only:** return findings and gaps without editing content or metadata.
 - **Propose priorities or scope:** show the affected changes, rationale,

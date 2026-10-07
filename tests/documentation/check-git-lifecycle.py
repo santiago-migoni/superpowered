@@ -16,6 +16,7 @@ consumer_path, source_commit, source_path, sha256}], protected [{path,
 sha256 (null means absent), index (exact git ls-files --stage -z output)}],
 forbidden_new_globs and existing_paths. References must contain the literal
 SOURCE_SHA:SOURCE_PATH pin in the consumer. A SHA256 covers complete file bytes.
+Milestone changed paths are compared to the first parent (empty tree for a root).
 This checker reads state; it does not initialize Git, commit, modify files or
 evaluate human approval, semantic scope, automatic skill activation or outcomes.
 """
@@ -73,8 +74,10 @@ def check(expectations):
                "HEAD changed for an expected no-op")
     for milestone in expectations.get("milestones", []):
         sha = commit(milestone["commit"])
+        parents = git("rev-list", "--parents", "-n", "1", sha).decode().split()[1:]
+        comparison = [parents[0], sha] if parents else [sha]
         paths = {p.decode() for p in git("diff-tree", "--root", "--no-commit-id", "--name-only",
-                                        "-r", "-z", sha).split(b"\0") if p}
+                                        "-r", "-z", *comparison).split(b"\0") if p}
         allowed = {relative(p) for p in milestone["allowed_paths"]}
         expect(paths <= allowed, f"unrelated paths in commit {sha}: {sorted(paths - allowed)}")
         for path, expected_hash in milestone.get("files", {}).items():

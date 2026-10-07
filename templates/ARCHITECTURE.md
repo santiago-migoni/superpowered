@@ -25,8 +25,8 @@ completing the document. -->
 - **System responsibility:** [What the existing system does and its boundary.]
 - **Product direction:** [Canonical constitution or equivalent, version and
   relevant principles or objectives; reference rather than repeat it.]
-- **Implementation reference:** [Repository revision or identified source
-  snapshot used for this description; record local changes if relevant.]
+- **Implementation reference:** [Exact source Git commit and repository-relative
+  paths used for this description; identify uncommitted/uninspected work explicitly.]
 - **Current state:** [What is implemented; explicitly state if no application
   exists yet. Identify what has not been inspected.]
 - **Related descriptions:** [Canonical structure and infrastructure documents,
@@ -114,4 +114,4 @@ priority belongs in the roadmap; tasks and commands belong in plans. -->
 
 | Date | Version | Change and rationale | Implementation or decision reference |
 |---|---|---|---|
-| [YYYY-MM-DD] | [Version] | [Affected architectural description or decision] | [Commit, durable snapshot or approval evidence] |
+| [YYYY-MM-DD] | [Version] | [Affected architectural description or decision] | [Exact Git commit:path and applicable approval/evidence] |

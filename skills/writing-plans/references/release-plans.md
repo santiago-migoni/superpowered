@@ -15,10 +15,12 @@ Release approval does not approve the spec or plan. If both drafts are requested
 planning can proceed with explicit dependencies on unapproved decisions; it
 does not make the work executable. Ask only missing questions that affect tasks.
 
-Reference exact approved spec content through a reachable Git revision or durable
-snapshot when needed. HEAD cannot identify uncommitted approved changes. Preserve
-the actual base before changing it; never replace an approved spec with an older
-commit or approve it from the release metadata.
+Follow [the shared Git workflow](../../using-superpowers/references/git-workflow.md)
+for exact approved spec commit/path references, Plan presentation and subsequent
+approval-recording commits. HEAD cannot identify uncommitted approved changes;
+register the actual approved base before editing. A blocked Git milestone is
+pending, without new snapshot fallback. Never repoint to an unapproved spec,
+substitute an older commit missing approval or approve from release metadata.
 
 Use Reference and Approach, Tasks, Verification and relevant Blockers. Put stable
 T-001 identifiers and US-001 references on checkbox tasks. Show affected paths,

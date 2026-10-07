@@ -23,7 +23,7 @@ example rows when completing the document. -->
   actually inspected; explicitly identify exclusions and unknowns.]
 - **Architecture reference:** [Canonical architecture, source version and
   relevant components or decisions; explicitly pending if unavailable.]
-- **Configuration reference:** [Revision or identified snapshot of deployment
+- **Configuration reference:** [Exact Git commit and paths of deployment
   configuration; reference its location in STRUCTURE.md when applicable.]
 - **Runtime evidence:** [Checks, environment and observation date, or pending
   inspection. Do not infer a live environment from configuration alone.]
@@ -92,4 +92,4 @@ operational mechanisms and evidence that support them here. -->
 
 | Date | Version | Change and rationale | Configuration, runtime or decision reference |
 |---|---|---|---|
-| [YYYY-MM-DD] | [Version] | [Affected environment or resource] | [Commit, durable snapshot, operational evidence or approval] |
+| [YYYY-MM-DD] | [Version] | [Affected environment or resource] | [Exact Git commit:path, operational evidence and applicable approval] |

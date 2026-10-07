@@ -19,8 +19,8 @@ approval and execution authorization are given in the same message. -->
 
 ## Reference and Approach
 
-- **Specification:** [SPEC.md](SPEC.md) [exact applicable revision and reachable
-  Git revision or durable snapshot when needed to identify the content.]
+- **Specification:** [SPEC.md](SPEC.md) [exact applicable revision, approval scope
+  and resolving Git commit:repository-relative-path for the approved content.]
 - **Approach:** [Brief implementation strategy and affected components or paths;
   reference applicable technical design.]
 

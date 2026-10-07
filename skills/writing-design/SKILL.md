@@ -42,7 +42,7 @@ them into separately maintained instructions.
 ## Inspect and Describe
 
 1. Identify inspected code, configuration, contracts and available runtime
-   evidence. Record the repository revision or durable source snapshot, relevant
+   evidence. Record exact source Git commits/paths, relevant
    local changes, environment and inspection limits.
 2. Describe current facts in the relevant sections. Logical responsibilities
    belong in architecture; observed code organization in structure; resources
@@ -68,6 +68,8 @@ continue to guide the authorized task.
 ## Create, Review or Update
 
 Follow [the shared metadata and maintenance rules](../../templates/README.md).
+Follow [the shared Git workflow](../using-superpowers/references/git-workflow.md)
+for presentation, approval-recording and update commits, including related files.
 Apply its independent revision, exact-base and related-reference rules when
 creating, changing or approving a document. Reconcile authorized current
 references; report protected stale sections without editing them.
@@ -83,8 +85,9 @@ unchanged. Plugin language configuration is separate work.
 
 Preserve stable ADR identifiers and reference existing decision records. Before
 changing approved decisions, preserve the exact approved content and its approval
-using a reachable Git revision or a durable snapshot outside `.superpowers/`.
-HEAD cannot preserve approved uncommitted content it does not contain.
+using its exact Git commit and repository-relative path. Register approved
+uncommitted bytes before editing; HEAD cannot preserve content it lacks. Git
+blockers leave preservation pending, without creating a new snapshot fallback.
 
 New documents use `draft`. Proposed changes to approved decisions use `in_review`,
 a new content version and `approval_reference: null`. Present the complete scoped

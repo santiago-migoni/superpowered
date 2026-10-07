@@ -25,6 +25,9 @@ Use [the template](../../templates/CONSTITUTION.md) and
 or updating a constitution. Search relevant sources, not the entire repository
 indiscriminately. Code explains implementation; it cannot approve a mission
 or business priority.
+For persistent work, follow [the shared Git workflow](../using-superpowers/references/git-workflow.md):
+commit the reviewed presentation and later approval record; verify exact bases
+before edits. A blocked Git milestone is pending, not a new snapshot fallback.
 
 | Request | Action |
 |---|---|
@@ -53,8 +56,8 @@ or business priority.
 3. Save a draft at `docs/superpowers/CONSTITUTION.md`, or the agreed canonical
    location. Preserve stable identifiers and update only affected sections.
    Before changing approved decisions, preserve the previous content and its
-   approval through a reachable Git revision or a durable version snapshot
-   outside `.superpowers/`. Do not invent a revision for uncommitted content.
+   approval through an exact Git commit and repository-relative path. Register
+   approved uncommitted bytes before editing; do not substitute an older HEAD.
 4. Present the document or complete scoped diff, its rationale, and pending
    decisions. A session may end with a useful draft.
 5. Record explicit approval of the presented version. Include who approved,
@@ -86,7 +89,9 @@ decisions affecting the feature first.
 Return the document path, state, and remaining decisions. Resume brainstorming
 only if a feature request was already authorized; completing a constitution
 alone does not start feature work. Bounded changes keep conversational designs.
-Architecture, roadmap, commits, and publication are not automatic follow-ups.
+Architecture, roadmap and publication are not automatic follow-ups. Scoped
+document commits follow the shared Git milestones; they do not authorize those
+other workflows or execution.
 
 ## Common Mistakes
 

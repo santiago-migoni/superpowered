@@ -107,6 +107,12 @@ digraph process {
 
 ## Setup
 
+Follow [the shared Git workflow](../using-superpowers/references/git-workflow.md).
+Verify written Plan/Spec commits and their applicable approval scope before
+affected execution; commits alone do not authorize it. Preserve approved pins,
+owned commit paths and existing task BASE..HEAD ranges. Durable outcomes needed
+after scratch cleanup belong in authorized versioned deliverables.
+
 Ensure the work happens in an isolated workspace: use
 superpowers:using-git-worktrees to create one or verify the existing one.
 Never start implementation on a main/master branch without your human
@@ -294,10 +300,14 @@ Before you delete anything, collect every ledger line containing
 `Ruling:` into your final message under "Rulings I made", in the order you
 made them, each with what it costs if wrong, and every `minor (deferred)`
 line under "Deferred minors". Both lists are exhaustive. Your final
-message is the only place the decisions you took on your human partner's
-behalf — and the findings you chose not to act on — reach them.
+message brings the decisions you took on your human partner's behalf — and
+the findings you chose not to act on — to their attention. Before cleanup,
+record the durable task outcomes, rulings and deferred findings in the Plan or
+existing permanent record; commit and verify those exact bytes under the shared
+Git workflow. If persistence is blocked, leave cleanup pending and report why.
 
-When the final review is clean and its fixes are committed, delete this
+When the final review is clean, its fixes are committed and the durable record
+is recoverable from Git, delete this
 plan's workspace directory — the git history is the record now. Sibling
 directories belong to other plans; leave them alone.
 

@@ -37,6 +37,12 @@ Skip any step = lying, not verifying
 
 ## Common Failures
 
+For persistent milestones, follow [the shared Git workflow](../using-superpowers/references/git-workflow.md):
+verify resolving commit/path and expected bytes, applicable approval scope and
+owned changed paths before claiming Git-backed completion. Verify durable
+outcomes needed after scratch cleanup are committed; leave blocked checks/commits
+pending and unrelated user changes untouched. Temporary ledgers stay ignored.
+
 | Claim | Requires | Not Sufficient |
 |-------|----------|----------------|
 | Tests pass | Test command output: 0 failures | Previous run, "should pass" |
