@@ -7,7 +7,11 @@ Actualizado: 2026-10-07.
 1. Definir las plantillas de roadmap, especificación y plan en `templates/`, siguiendo el idioma inglés del plugin y las convenciones de metadatos existentes. Precisar el propósito de cada documento, sus referencias y su relación con constitución y diseño. La plantilla de roadmap ordenará resultados e incrementos; la especificación delimitará un cambio y sus criterios de aceptación; el plan organizará su ejecución.
 2. Después de definir esas plantillas, revisar conjuntamente el versionado de las cinco skills que cubren constitución, diseño, roadmap, especificación y planificación. Resolver cuándo incrementar versión, cómo conservar una base aprobada, cómo registrar aprobaciones parciales y cómo mantener referencias reproducibles sin generar copias o actualizaciones innecesarias.
 
-Las plantillas están implementadas. La política común de revisiones y mantenimiento de referencias se incorporó en el código fuente de las cinco rutas; queda pendiente publicarla y validar la actualización instalada en Codex App.
+Las plantillas y la política común de revisiones/mantenimiento están implementadas.
+El plan aprobado incorpora ahora Git como historial obligatorio de los hitos
+persistentes en las cinco rutas y en sus transiciones hacia ejecución/cierre.
+La publicación de esta actualización y su validación instalada en Codex App
+siguen pendientes; las evaluaciones locales no prueban activación automática.
 
 ## Avance de implementación
 
@@ -24,12 +28,22 @@ La validación funcional de constitución y diseño quedó cerrada: se registrar
 La revisión conjunta resolvió:
 - Las correcciones editoriales y el registro de aprobación conservan revisión y alcance aprobado; los cambios sustantivos sobre contenido presentado inician otra revisión. Los borradores se elaboran sin incrementar por cada pregunta.
 - Las actualizaciones materiales de descripciones y evidencia tienen revisión propia, conservando únicamente la autoridad de decisiones que no cambiaron. Aprobaciones parciales se registran por alcance, sin aprobar el documento entero.
-- Se reutilizan bases exactas existentes en Git o snapshots durables; no se exige un árbol de copias ni revisiones sincronizadas.
+- La política previa permitía bases exactas en Git o snapshots durables. La
+  decisión posterior exige Git para el trabajo nuevo: commit y ruta exactos,
+  conservación previa de todos los documentos aprobados afectados y registros
+  separados de presentación/aprobación. Los snapshots históricos se conservan
+  literales; no son un fallback para nuevos hitos.
 - Al crear, modificar o aprobar documentos se comprueban referencias actuales relacionadas. Se reconcilian dentro del encargo; las protegidas se informan por archivo/sección. Las bases y declaraciones históricas permanecen literales.
 
 La prueba nativa de Spec/Plan recuperó SPEC-A01 y PLAN-A01 sin autorizar ejecución. La reconciliación explícita actualizó Spec, Plan, release e índice, conservando contenido aprobado y bloqueos. Esta prueba demuestra mantenimiento solicitado, no activación automática de la nueva regla.
 
-Validación local de la nueva política: [resultados y límites](superpowers/specs/2026-10-07-document-maintenance-validation.md). Pendientes: release del plugin y pruebas nativas de detección de referencias durante creación/aprobación, cambios sustantivos y mantenimiento de evidencia.
+Validación local del mantenimiento: [resultados y límites](superpowers/specs/2026-10-07-document-maintenance-validation.md).
+Validación local del ciclo con Git: [resultados y evidencia](superpowers/specs/2026-10-07-git-document-lifecycle-validation.md).
+Pendientes: publicar la actualización de Git cuando se solicite, actualizar
+Codex App y probar creación/aprobación/continuidad, cambio sustantivo con base
+aprobada del Plan, reconciliación editorial de releases y bloqueos de commits en
+conversaciones nativas nuevas. Se usará una copia aislada con repositorio propio;
+el sandbox original queda preservado.
 
 ## Referencias
 

@@ -43,10 +43,10 @@
 
 **Interfaces:** Scenario fixtures and transcripts feed an independent read-only checker. It receives a fixture path, expected milestone/reference records and pre-work hashes/index inventory; it checks actual Git state and file bytes, not whether skill prose contains keywords. Fixtures live in an isolated temporary directory.
 
-- [ ] Define cases for fresh project, existing repo, linked worktree, read-only/no-commit, dirty index, approval, partial approval, substantive change, editorial related-reference update, evidence update and no-op.
-- [ ] Run representative cases against current 6.8.0 instructions in fresh sessions before editing skills. Record actual operations, returned paths and Git state. Report passes, gaps and failures honestly; do not invent a RED result when the agent complies.
-- [ ] Make the checker demonstrate detection of a missed commit, wrong approved-base pin and unrelated file committed using controlled fixtures; valid fixtures must pass. The checker creates no production implementation or fake product approval.
-- [ ] Expected: pre-work hashes/index state and before/after transcripts are retained; missing required Git history is observable. Use `python3 tests/documentation/check-git-lifecycle.py --help` for the documented checker invocation once implemented.
+- [x] Define cases for fresh project, existing repo, linked worktree, read-only/no-commit, dirty index, approval, partial approval, substantive change, editorial related-reference update, evidence update and no-op.
+- [x] Run representative cases against current 6.8.0 instructions in fresh sessions before editing skills. Record actual operations, returned paths and Git state. Report passes, gaps and failures honestly; do not invent a RED result when the agent complies.
+- [x] Make the checker demonstrate detection of a missed commit, wrong approved-base pin and unrelated file committed using controlled fixtures; valid fixtures must pass. The checker creates no production implementation or fake product approval.
+- [x] Expected: pre-work hashes/index state and before/after transcripts are retained; missing required Git history is observable. Use `python3 tests/documentation/check-git-lifecycle.py --help` for the documented checker invocation once implemented.
 
 ### Task 2: T-002 — Define the shared Git workflow and entry points
 
@@ -57,12 +57,12 @@
 
 **Interfaces:** The reference owns repository discovery, initialization boundaries, milestone commits and commit verification. It is loaded for persistent deliverable work, not every read-only answer. It respects native worktree ownership and existing human instructions.
 
-- [ ] Specify Git discovery through `git rev-parse`, including a .git file in linked worktrees; confirm that the intended document paths belong to the identified project repository.
-- [ ] Specify new-project initialization, initial content recording and author/commit failure handling, without fallback snapshots or an unrelated parent/nested repository.
-- [ ] Define scoped staging/commit behavior with prior index/worktree state and explicit path ownership. A failed or prohibited commit is reported as pending, not as a saved Git milestone.
-- [ ] Define evidence of a milestone: resolving commit, correct document path and exact expected bytes through `git show COMMIT:PATH`; report the identifier only after verification.
-- [ ] Connect the bootstrap with a short conditional reference; preserve existing voice, rationalization tables and process routing.
-- [ ] Run the T-001 repo/worktree/read-only/dirty-index cases in fresh sessions. Expected: correct boundary, only authorized commits, unrelated state unchanged and no new versions/ tree.
+- [x] Specify Git discovery through `git rev-parse`, including a .git file in linked worktrees; confirm that the intended document paths belong to the identified project repository.
+- [x] Specify new-project initialization, initial content recording and author/commit failure handling, without fallback snapshots or an unrelated parent/nested repository.
+- [x] Define scoped staging/commit behavior with prior index/worktree state and explicit path ownership. A failed or prohibited commit is reported as pending, not as a saved Git milestone.
+- [x] Define evidence of a milestone: resolving commit, correct document path and exact expected bytes through `git show COMMIT:PATH`; report the identifier only after verification.
+- [x] Connect the bootstrap with a short conditional reference; preserve existing voice, rationalization tables and process routing.
+- [x] Run the T-001 repo/worktree/read-only/dirty-index cases in fresh sessions. Expected: correct boundary, only authorized commits, unrelated state unchanged and no new versions/ tree.
 
 ### Task 3: T-003 — Integrate all product-document routes and remove the fallback
 
@@ -73,12 +73,12 @@
 
 **Interfaces:** Product rules retain statuses, independent revisions and IDs; exact dependencies become commit + repository-relative path. Approval records identify presented content and human decision scope. Existing snapshot references stay historical.
 
-- [ ] Replace Git-or-snapshot preservation for new canonical work with required Git bases and milestones. Link the shared operational reference instead of repeating its commands in five skills.
-- [ ] Present committed draft content; record subsequent approval in another commit. Keep approval_reference pointing to a scoped decision record, which identifies the presented commit. Preserve partial-approval null/global-status rules.
-- [ ] Handle already approved uncommitted content and snapshot-era inputs by recording their actual current provenance in Git; no fabricated earlier commit or automatic deletion of archives.
-- [ ] Apply the rule to every related approved document edited during reconciliation, including release records. Preserve its exact prior Git content even for editorial updates.
-- [ ] Verify substantive Spec revision and affected Plan future tasks; approved pins/history remain on the old base until the changed base is adopted under actual authorization.
-- [ ] Run approval, partial approval, same-revision editorial update, evidence-only revision and related-release cases. Expected: exact content recoverable with git show, no false approval/execution, existing histories and stable IDs preserved.
+- [x] Replace Git-or-snapshot preservation for new canonical work with required Git bases and milestones. Link the shared operational reference instead of repeating its commands in five skills.
+- [x] Present committed draft content; record subsequent approval in another commit. Keep approval_reference pointing to a scoped decision record, which identifies the presented commit. Preserve partial-approval null/global-status rules.
+- [x] Handle already approved uncommitted content and snapshot-era inputs by recording their actual current provenance in Git; no fabricated earlier commit or automatic deletion of archives.
+- [x] Apply the rule to every related approved document edited during reconciliation, including release records. Preserve its exact prior Git content even for editorial updates.
+- [x] Verify substantive Spec revision and affected Plan future tasks; approved pins/history remain on the old base until the changed base is adopted under actual authorization.
+- [x] Run approval, partial approval, same-revision editorial update, evidence-only revision and related-release cases. Expected: exact content recoverable with git show, no false approval/execution, existing histories and stable IDs preserved.
 
 ### Task 4: T-004 — Align design, generic planning, execution and completion
 
@@ -90,11 +90,11 @@
 
 **Interfaces:** Existing task/review BASE..HEAD ranges and execution ledgers remain intact. Both dated and release plans use the shared Git milestones. Read-only and bounded conversational routes retain their proportional workflow.
 
-- [ ] Align brainstormed written-spec presentation and post-self-review commits so the presented bytes actually match the recorded commit.
-- [ ] Make generic and release Plan presentation identify persisted content; keep plan approval, method choice and execution authorization separate.
-- [ ] Verify applicable approved dependency commits before affected execution. Preserve current task commit ranges and review-package behavior; no mandatory whole-document reapproval for unchanged decisions.
-- [ ] Verify tracked durable outcomes before declaring Git-backed completion or deleting scratch; preserve unsupported checks as pending. Do not blanket-track temporary ledger files.
-- [ ] Run generic-plan, release-plan and bounded-correction scenarios. Expected: no invented release, extra specification or automatic execution/push; documented dependencies and executed ranges remain reproducible.
+- [x] Align brainstormed written-spec presentation and post-self-review commits so the presented bytes actually match the recorded commit.
+- [x] Make generic and release Plan presentation identify persisted content; keep plan approval, method choice and execution authorization separate.
+- [x] Verify applicable approved dependency commits before affected execution. Preserve current task commit ranges and review-package behavior; no mandatory whole-document reapproval for unchanged decisions.
+- [x] Verify tracked durable outcomes before declaring Git-backed completion or deleting scratch; preserve unsupported checks as pending. Do not blanket-track temporary ledger files.
+- [x] Run generic-plan, release-plan and bounded-correction scenarios. Expected: no invented release, extra specification or automatic execution/push; documented dependencies and executed ranges remain reproducible.
 
 ### Task 5: T-005 — Verify integration, packaging and document the local results
 
@@ -103,11 +103,11 @@
 - Complete T-001 validation/evidence records.
 - Modify: `docs/BACKLOG.md` to distinguish source implementation, local evaluations and native validation pending.
 
-- [ ] Run fresh pressure sessions across the T-001 matrix with updated skills. Independently inspect commits, pinned content, index/worktree preservation, unchanged approvals/results and absence of new snapshot fallbacks.
-- [ ] Run `bash tests/codex/test-package-codex-plugin.sh` and `bash tests/codex/test-marketplace-manifest.sh`. Expected: selected-ref resource checks and metadata fallback pass; packages contain the shared reference.
-- [ ] Run `bash tests/claude-code/test-release-plan-brief.sh`, `bash tests/claude-code/test-executing-plans-scripts.sh` and `bash tests/claude-code/test-sdd-workspace.sh`. Expected: existing extraction, ledger and workspace tests pass.
-- [ ] Run `git diff --check` and resolve new relative reference links. Review the full scoped diff; disclose any failures/untested host behavior and verify no unrelated staged content entered milestone commits.
-- [ ] Save baseline/updated outcomes and actual fixture evidence. Passing local sessions is not a claim of native automatic activation.
+- [x] Run fresh pressure sessions across the T-001 matrix with updated skills. Independently inspect commits, pinned content, index/worktree preservation, unchanged approvals/results and absence of new snapshot fallbacks.
+- [x] Run `bash tests/codex/test-package-codex-plugin.sh` and `bash tests/codex/test-marketplace-manifest.sh`. Expected: selected-ref resource checks and metadata fallback pass; packages contain the shared reference.
+- [x] Run `bash tests/claude-code/test-release-plan-brief.sh`, `bash tests/claude-code/test-executing-plans-scripts.sh` and `bash tests/claude-code/test-sdd-workspace.sh`. Expected: existing extraction, ledger and workspace tests pass.
+- [x] Run `git diff --check` and resolve new relative reference links. Review the full scoped diff; disclose any failures/untested host behavior and verify no unrelated staged content entered milestone commits.
+- [x] Save baseline/updated outcomes and actual fixture evidence. Passing local sessions is not a claim of native automatic activation.
 
 ### Task 6: T-006 — Publish when authorized and validate installed behavior
 
@@ -137,3 +137,34 @@ The presented content is commit `9ab032ccc5a7ff45c06950277153bc5c0c073dd7`, path
 inline with independent behavior evaluators as described in the plan. T-006 keeps
 publication and installed native validation conditional on their stated authorization
 and host update; no release or push is implied by this approval record.
+
+## Local execution results — 2026-10-07
+
+T-001–T-005 are complete in source. Before editing this approved plan, its
+existing exact content and approval record were verified in commit
+`f6181273c42ae0d77ab2fb6a7bc5d83c733231c7`, path
+`docs/superpowers/plans/2026-10-07-git-document-lifecycle.md`.
+The original presentation and literal approval above remain unchanged.
+
+See [local validation](../specs/2026-10-07-git-document-lifecycle-validation.md)
+and its linked evidence for baseline gaps, updated fixtures, independent
+review findings, fixes and checks. The shared policy and integrations preserve
+execution-method choice, task review ranges and scoped authorizations.
+`using-git-worktrees` required no edits: its existing native ownership and
+linked-worktree detection are compatible with the shared policy.
+
+The final review exposed and verified fixes for unrelated staged files in a
+sample commit, durable decisions before scratch cleanup and merge-path checking
+in the read-only fixture checker. No deferred code finding remains in that
+reviewed scope. Controlled fixture approvals and measured outcomes are synthetic;
+they do not approve or validate the adopting product.
+
+T-006 is not completed: no version bump, push or installed/native validation is
+included in this local implementation milestone. Publish and update the host
+under the stated authorization before testing native automatic routing.
+
+Implementation source milestone: `43bcf575de2d05b81a2838cc2c79526044651e80`.
+Final local verification passed: 10 checker tests, 97 package assertions,
+marketplace/extraction checks and existing execution/workspace suites. Source
+bytes were verified against that commit; durable fixture evidence is retained
+beside the validation report. Publication remains pending as stated in T-006.
